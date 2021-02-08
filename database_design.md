@@ -17,7 +17,6 @@ Last Modification: 2/8/2021 by Jess
 + Property Exterior Details (Parking & Garage / Roof & Patio & Fencing)
 + Property's Days on Market (how long has this property been posted for sale)
 + Property Info (Year Built)
-+ 
 +  **Buy & Sale ONLY**
   + Property Price ($750,000) - **queryable**
   + Property Price History (historical transaction dates and prices) 
