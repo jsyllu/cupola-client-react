@@ -1,5 +1,7 @@
 #  Cupola
 
+[Objectives in Google Doc](https://docs.google.com/document/d/1xnUKw2niSWqDqxQmwM2skHvlqD3SRDRYzhVD4Wq67i0/edit)
+
 ## Description
 
 The objective of this project is to connect home buyers to sellers and tenants to renters directly to <u>facilitate services including home trading and residential leasing without the intervention of local real estate agency</u> as mostly they add no value to the transactions but substantially cost for both parties. 
