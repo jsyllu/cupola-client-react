@@ -1,0 +1,111 @@
+/*=========
+Form
+===========*/
+.form-control{
+    position: relative;
+    height: 41px;
+    background: #f2f2f2;
+    box-shadow: none !important;
+    border: none;
+}
+.form-control:focus{
+    background: #e2e2e2;
+}
+.form-control .btn{
+    border-radius: 4px;
+}
+.signup-form,
+.login-form{
+    width: 390px;
+    margin: 4rem auto;
+    font-weight: 400;
+}
+.signup-form form,
+.login-form form{
+    color: var(--color-font-dark);
+    border-radius: 15px;
+    margin-bottom: 15px;
+    background: rgba(255,255,255,0.9);
+    box-shadow: 0.3rem 0.3rem 0.75rem rgba(0, 0, 0, 0.3);
+    padding: 30px;
+}
+.signup-form h2,
+.login-form h2 {
+    color: #333;
+    font-weight: bold;
+    margin-top: 0;
+}
+.signup-form .form-group,
+.login-form .form-group{
+    margin-bottom: 20px;
+}
+.form-group .form-control-icon {
+    position: absolute;
+    z-index: 2;
+    text-align: center;
+    width: 2.375rem;
+    height: 2.375rem;
+    line-height: 2.375rem;
+    pointer-events: none;
+    color: #aaa;
+}
+input{
+    text-indent: 25px;
+}
+.signup-form input[type="checkbox"],
+.login-form input[type="checkbox"]{
+    margin-top: 3px;
+}
+.signup-form .row div:first-child{
+    padding-right: 5px;
+}
+.signup-form .row div:last-child{
+    padding-left: 5px;
+}
+select {
+    border-width: 1px;
+    border-radius: 4px;
+    margin-left: 5px;
+}
+.signup-form .btn,
+.login-form .btn{
+    font-size: 18px;
+    font-weight: bold;
+    background: #3598dc;
+    border: none;
+    min-width: 140px;
+    width: 100%;
+}
+.signup-form .btn:hover,
+.login-form .btn:hover,
+.signup-form .btn:focus,
+.login-form .btn:focus{
+    background: #2389cd !important;
+    outline: none;
+}
+.signup-form a,
+.login-form a{
+    text-decoration: underline;
+}
+.signup-form a:hover,
+.login-form a:hover{
+    text-decoration: none;
+}
+.signup-form form a,
+.login-form form a{
+    color: var(--color-dark);
+    text-decoration: none;
+}
+.signup-form form a:hover,
+.login-form form a:hover{
+    text-decoration: underline;
+}
+.signup-form .hint-text,
+.login-form .hint-text {
+    padding-bottom: 15px;
+    text-align: center;
+}
+.signup-form .hint-text a,
+.login-form .hint-text a {
+    color: inherit;
+}
