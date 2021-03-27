@@ -1,10 +1,9 @@
 import React from "react"
-import {Helmet} from "react-helmet";
+import {Helmet} from "react-helmet"
 
 const PropertyForRent = ({p}) => {
-    // console.log(p)
     return (
-        <div>
+        <div className="container">
             <Helmet>
                 <title>{p.address} for Rent | Cupola</title>
             </Helmet>
