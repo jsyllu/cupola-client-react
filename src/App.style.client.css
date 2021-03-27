@@ -1,7 +1,7 @@
 /*============
 Global style
 ============*/
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap");
 :root{
   --color-font-dark: #3c4250;
   --container-px: 2rem;
@@ -17,7 +17,7 @@ html{
 }
 body{
   color: var(--color-font-dark);
-  font-family: 'Poppins', sans-serif;
+  font-family: "Poppins", sans-serif;
   -ms-flex-align: center;
   -ms-flex-pack: center;
   -webkit-box-align: center;

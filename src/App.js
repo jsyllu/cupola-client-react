@@ -1,16 +1,22 @@
-import './App.style.client.css'
+import React from "react"
 import {BrowserRouter} from 'react-router-dom'
 import {Route} from 'react-router-dom'
 import {Helmet} from "react-helmet"
+import './App.style.client.css'
 import Header from "./common/header"
 import Footer from "./common/footer"
 import Search from "./components/search/search"
-import SearchResult from "./components/search-result/search-result"
 import Property from "./components/property/property"
+import AdminBoard from "./components/admin-board/admin-board"
+import UserProfile from "./components/profile/user-profile"
+import Register from "./components/authentication/register"
+import LogIn from "./components/authentication/login"
+import SaleSearchResult from "./components/search-result/sale-search-result"
+import RentSearchResult from "./components/search-result/rent-search-result"
 
 function App() {
     return (
-        <div className="container">
+        <div className="">
             <Helmet>
                 <title>Cupola</title>
             </Helmet>
@@ -19,9 +25,26 @@ function App() {
                 <Route path="/"
                        exact={true}
                        component={Search} />
-                <Route path="/:type/:location"
+                <Route path="/admin"
                        exact={true}
-                       component={SearchResult} />
+                       component={AdminBoard} />
+                <Route path="/login"
+                       exact={true}
+                       component={LogIn} />
+                <Route path="/register"
+                       exact={true}
+                       component={Register} />
+                <Route path={[
+                    "/profile",
+                    "/profile/:role"]}
+                       exact={true}
+                       component={UserProfile} />
+                <Route path="/sale/:location"
+                       exact={true}
+                       component={SaleSearchResult} />
+                <Route path="/rent/:location"
+                       exact={true}
+                       component={RentSearchResult} />
                 <Route path={[
                     "/sale/:location/p/:slid",
                     "/rent/:location/p/:rlid",
