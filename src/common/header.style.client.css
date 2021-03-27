@@ -1,0 +1,73 @@
+/*==============
+Navbar
+===============*/
+.navbar{
+    display: flex;
+    width: 100%;
+    align-items: center;
+    justify-content: space-between;
+    box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.035);
+    padding: 0.5rem var(--container-px);
+    margin-bottom: var(--header-mb);
+    background-color: white;
+    font-weight: 500;
+}
+/* Nav Brand */
+.navbar-light .navbar-brand,
+.navbar-light .navbar-brand:focus {
+    font-weight: 700;
+    font-size: 1.75rem;
+    color: var(--color-font-dark);
+}
+.navbar .navbar-brand span {
+    color: #4298e7;
+}
+.navbar-light .navbar-brand:hover{
+    color: var(--color-font-dark); /* do not change color */
+    transform: scale(1.05);
+    transition: 0.1s ease;
+}
+
+/* Navbar Search Bar */
+.navbar .search-bar {
+    padding: 0.4rem 0.7rem;
+    width: auto;
+    margin: auto;
+}
+.navbar .search-bar input[type="text"] {
+    font-size: 14px;
+    width: auto;
+}
+
+/* Navbar Menu */
+.navbar-menu{
+    display: flex;
+    flex-basis: auto;
+    flex-grow: 1;
+    justify-content: flex-end;
+    align-items: center;
+    text-align: center;
+    margin-bottom: 2px;
+}
+.navbar-menu .navbar-nav{
+    align-items: flex-end;
+    margin-left: auto;
+    flex-direction: row;
+    display: flex;
+    list-style: none;
+}
+.navbar-light .navbar-nav .nav-link.active,
+.navbar-light .navbar-nav .nav-link:active{
+    color: var(--color-font-dark);
+    border-bottom: 3px solid white;
+}
+.nav-link {
+    margin: 0 1rem;
+    text-decoration: none;
+    padding-bottom: 0;
+    border-bottom: 3px solid transparent;
+}
+.navbar-light .navbar-nav .nav-link:hover {
+    border-bottom: 3px solid rgba(255, 255, 255, 0.8);
+    color: var(--color-font-dark);
+}
