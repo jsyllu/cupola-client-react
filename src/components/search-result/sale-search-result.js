@@ -8,7 +8,7 @@ const SaleSearchResult = () => {
     const sales = SaleData
 
     return (
-        <div>
+        <div className="container">
             <Helmet>
                 <title>Homes for Sale in {location} | Cupola</title>
             </Helmet>
