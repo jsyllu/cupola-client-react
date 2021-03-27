@@ -8,7 +8,7 @@ const RentSearchResult = () => {
     const rentals = DummyData
 
     return (
-        <div>
+        <div className="container">
             <Helmet>
                 <title>Apartments for Rent in {location} | Cupola</title>
             </Helmet>
