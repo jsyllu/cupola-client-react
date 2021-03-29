@@ -10,14 +10,14 @@ To implement a RESTful API.
 
 `/register` - Register Account
 
-`/profile` - User Profile
+`/profile/:uid` - User Profile
 
-`/profile/:role` - User Profile with Role specified
+`/profile/:uid/:role` - User Profile with Role specified
 
-+ `/profile/seller` - Seller Profile
-+ `/profile/buyer` - Buyer Profile
-+ `/profile/landlord` - Landlord Profile
-+ `/profile/tenant` - Tenant Profile
++ `/profile/:uid/seller` - Seller Profile
++ `/profile/:uid/buyer` - Buyer Profile
++ `/profile/:uid/landlord` - Landlord Profile
++ `/profile/:uid/tenant` - Tenant Profile
 
 `/:type/:location` - Search Result, Sale or Rent
 
