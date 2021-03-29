@@ -11,6 +11,11 @@ This web application is a third-party real estate broker platform providing real
 ### API
 
 + Zillow
++ Yelp Fusion
++ Google Maps API
++ LocalSchoolDirectory or GreatSchools.org
++ CrimeoMeter Crime Data
+
 
 ### User Roles
 
