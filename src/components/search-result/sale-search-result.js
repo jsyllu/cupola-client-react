@@ -1,11 +1,12 @@
 import React from "react"
 import {Link, useParams} from "react-router-dom"
 import {Helmet} from "react-helmet"
-import {SaleData} from "../../dummyData/dummy-data"
+import {connect} from "react-redux"
 
-const SaleSearchResult = () => {
+const SaleSearchResult = ({
+    sales = []
+}) => {
     const {location} = useParams()
-    const sales = SaleData
 
     return (
         <div className="container">
@@ -16,10 +17,10 @@ const SaleSearchResult = () => {
             <ul>
                 {
                     sales.map((s, index) =>
-                        <Link to={`/sale/${location}/p/${s.slid}`}
+                        <Link to={`/sale/${location}/p/${s.zpid}`}
                               key={index}>
                             <li>
-                                {s.address}
+                                {s["zpid"]} {/* test api*/}
                             </li>
                         </Link>
                     )
@@ -29,4 +30,12 @@ const SaleSearchResult = () => {
     )
 }
 
-export default SaleSearchResult
+const stpm = (state) => {
+    return {
+        sales : state.saleListingReducer.saleListing
+    }
+}
+
+const dtpm = (dispatch) => {}
+
+export default connect(stpm, dtpm)(SaleSearchResult)
