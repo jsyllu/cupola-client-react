@@ -8,7 +8,7 @@ const API_HOST = "zillow-com1.p.rapidapi.com";
  * @param {Object} params 
  * @returns 
  */
- const getEndPointHelper = async (endpoint, params) => {
+ const getEndPointHelper = (endpoint, params) => {
     let endPoint = URL + `/${endpoint}?`;
 
     for (const prop in params) {
@@ -58,6 +58,8 @@ const getPropertyDetail = async (params) => {
     if (!response.ok) {
         throw new Error(`HTTP error! status: ${response.status}`);
     }
+    // response.json()
+    // .then(d => console.log(d));
     return response.json();
 };
 /**

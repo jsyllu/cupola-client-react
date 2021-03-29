@@ -2,10 +2,12 @@ import React from "react"
 import {Link, useParams} from "react-router-dom"
 import {Helmet} from "react-helmet"
 import {DummyData} from "../../dummyData/dummy-data"
+import {connect} from "react-redux"
 
-const RentSearchResult = () => {
+const RentSearchResult = ({
+    rentals = []
+}) => {
     const {location} = useParams()
-    const rentals = DummyData
 
     return (
         <div className="container">
@@ -16,10 +18,11 @@ const RentSearchResult = () => {
             <ul>
                 {
                     rentals.map((r, index) =>
-                        <Link to={`/rent/${location}/p/${r.rlid}`}
+                        <Link to={`/rent/${location}/p/${r.zpid}`}
                               key={index}>
                             <li>
-                                {r.address}
+                                {r["zpid"]} {/* test api*/}
+                                {/* {r.address} */}
                             </li>
                         </Link>
                     )
@@ -28,5 +31,12 @@ const RentSearchResult = () => {
         </div>
     )
 }
+const stpm = (state) => {
+    return {
+        rentals : state.rentalListingReducer.rentalListing
+    }
+}
 
-export default RentSearchResult
+const dtpm = (dispatch) => {}
+
+export default connect(stpm, dtpm)(RentSearchResult)

@@ -7,8 +7,21 @@ import 'jquery'
 import "popper.js"
 import './index.css'
 import App from './App'
+import {combineReducers, createStore} from "redux"
+import {Provider} from "react-redux"
+import saleListingReducer from "./reducers/sale-listing-reducer"
+import rentalListingReducer from "./reducers/rental-listing-reducer";
+
+const reducers = combineReducers({
+  saleListingReducer,
+  rentalListingReducer
+});
+
+const store = createStore(reducers);
 
 ReactDOM.render(
-    <App />,
+  <Provider store={store}>
+    <App />
+  </Provider>,
   document.getElementById('root')
 );

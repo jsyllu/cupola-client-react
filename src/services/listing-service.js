@@ -13,7 +13,7 @@ const findListingById = async (slid) => {
  * @returns {Promise} a json promise
  */
 const findSaleListings = async (params) => {
-    return zillowService.getPropertyDetail({
+    return zillowService.getPropertyByFilters({
         ...params,
         "status_type" : "ForSale"
     });
@@ -24,7 +24,7 @@ const findSaleListings = async (params) => {
  * @returns {Promise} a json promise
  */
  const findRentalListings = async (params) => {
-    return zillowService.getPropertyDetail({
+    return zillowService.getPropertyByFilters({
         ...params,
         "status_type" : "ForRent"
     });
