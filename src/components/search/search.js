@@ -37,17 +37,19 @@ const Search = () => {
                 <div className="slide-item"></div>
             </div>
             <div className="search-property-location">
-                <div className="search-bar row">
-                    <input className=""
-                           type="text"
-                           placeholder="Enter address"
-                           value={searchInput}
-                           onChange={(e) => setSearchInput(e.target.value)} />
-                   <Link to={`/${type}/${searchInput}`}>
-                        <button className="btn btn-outline-primary">
-                            <i className="fas fa-search"></i>
-                        </button>
-                    </Link>
+                <div className="row">
+                    <div className="search-bar">
+                        <input className=""
+                               type="text"
+                               placeholder="Enter address"
+                               value={searchInput}
+                               onChange={(e) => setSearchInput(e.target.value)} />
+                        <Link to={`/${type}/${searchInput}`}>
+                            <button className="btn btn-outline-primary">
+                                <i className="fas fa-search"></i>
+                            </button>
+                        </Link>
+                    </div>
                 </div>
             </div>
         </div>

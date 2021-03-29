@@ -15,6 +15,10 @@
 .search-property-location {
     display: flex;
     justify-content: center;
+    /*width: auto;*/
+    max-width: 584px;
+    width: 584px;
+    margin: 0 auto;
 }
 
 /*========================
@@ -71,9 +75,16 @@ Property Type Toggle
 
 
 /* Search Bar */
+.search-property-location .row {
+    width: 100%;
+}
+.search-bar {
+    width: 100%;
+}
 .search-bar input,
 .search-bar button {
     border: none;
+    word-wrap: break-word;
 }
 .search-bar button:hover {
     background-color: transparent!important;
@@ -85,9 +96,13 @@ Property Type Toggle
 .search-bar input[type="text"] {
     font-weight: 500;
     font-size: 16px;
+    width: 100%;
 }
 .search-bar {
-    border: 1px solid var(--color-font-dark);
-    padding: 0.75rem;
+    display: flex;
+    border: 1px solid rgba(223,225,229,0);
+    padding: 0.5rem 0.3rem;
     border-radius: 0.5rem;
+    box-shadow: 0 1px 6px rgba(32, 33, 36, 0.28);
+    margin: 0 auto;
 }
