@@ -5,8 +5,8 @@ import './search.style.client.css'
 import listingService from "../../services/listing-service"
 
 const Search = ({
-    getListing
-}) => {
+                    getListing
+                }) => {
     // search property types
     const SALE = "sale"
     const RENT = "rent"
@@ -41,30 +41,33 @@ const Search = ({
                 <div className="slide-item"></div>
             </div>
             <div className="search-property-location">
-                <div className="search-bar row">
-                    <input className=""
-                           type="text"
-                           placeholder="Enter address"
-                           value={searchInput}
-                           onChange={(e) => setSearchInput(e.target.value)} />
-                   <Link to={`/${type}/${searchInput}`}
-                        onClick={(e) => {
-                            getListing(searchInput, type)
-                        }}>
-                        <button className="btn btn-outline-primary">
-                            <i className="fas fa-search"></i>
-                        </button>
-                    </Link>
+                <div className="row">
+                    <div className="search-bar">
+                        <input className=""
+                               type="text"
+                               placeholder="Enter address"
+                               value={searchInput}
+                               onChange={(e) => setSearchInput(e.target.value)} />
+                        <Link to={`/${type}/${searchInput}`}
+                              onClick={(e) => {
+                                  getListing(searchInput, type)
+                              }}>
+                            <button className="btn btn-outline-primary">
+                                <i className="fas fa-search"></i>
+                            </button>
+                        </Link>
+                    </div>
                 </div>
             </div>
         </div>
     )
 }
-const stpm = (state) => {}
+const stpm = (state) => {
+}
 
 const dtpm = (dispatch) => {
     return {
-        getListing : async (location, type) => {
+        getListing: async (location, type) => {
             let listings
             try {
                 if (type === "sale") {
@@ -76,8 +79,8 @@ const dtpm = (dispatch) => {
                 }
                 console.log(listings["props"])
                 dispatch({
-                        type,
-                        listings : listings["props"]
+                    type,
+                    listings: listings["props"]
                 })
             } catch (e) {
                 alert(e.message)
