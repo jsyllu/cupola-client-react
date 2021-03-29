@@ -16,7 +16,7 @@ import RentSearchResult from "./components/search-result/rent-search-result"
 
 function App() {
     return (
-        <div className="">
+        <div className="wrapper">
             <Helmet>
                 <title>Cupola</title>
             </Helmet>
@@ -53,7 +53,8 @@ function App() {
                 ]}
                        exact={true}
                        component={Property} />
-                <Footer />
+                <div className="push"></div>
+               <Footer />
             </BrowserRouter>
         </div>
     )

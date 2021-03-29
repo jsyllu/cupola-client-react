@@ -12,8 +12,9 @@ Global style
   --color-light: #e4f2ff;
   --color-mid: #7dbfff;
 }
-html{
+html, body{
   height: 100%;
+  margin: 0;
 }
 body{
   color: var(--color-font-dark);
@@ -28,4 +29,10 @@ body{
 .container {
   max-width: 1320px;
   display: block;
+  margin: auto !important;
+  min-height: 100%;
+}
+.wrapper {
+  min-height: 100%;
+  margin-bottom: 40px;
 }
