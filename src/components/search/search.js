@@ -8,7 +8,7 @@ const Search = () => {
     const RENT = "rent"
 
     const [type, setType] = useState(SALE)
-    const [searchInput, setSearchInput] = useState("Boston,MA")
+    const [searchInput, setSearchInput] = useState("")
 
     return (
         <div className="search container">
