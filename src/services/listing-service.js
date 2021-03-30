@@ -1,7 +1,7 @@
 import zillowService from "./zillow-service"
 /**
  * get the listing detail
- * @param {Integer} slid 
+ * @param {number} slid 
  * @returns {Promise} a json promise
  */
 const findListingById = async (slid) => {
@@ -9,7 +9,7 @@ const findListingById = async (slid) => {
 }
 /**
  * find properties for sale based on different filters
- * @param {Object} params - a object that includes the filters information, required paramter - location : string
+ * @param {object} params - a object that includes the filters information, required paramter - location : string
  * @returns {Promise} a json promise
  */
 const findSaleListings = async (params) => {
@@ -20,7 +20,7 @@ const findSaleListings = async (params) => {
 }
 /**
  * find properties for rent based on different filters
- * @param {Object} params - a object that includes the filters information, required paramter - location : string
+ * @param {object} params - a object that includes the filters information, required paramter - location : string
  * @returns {Promise} a json promise
  */
  const findRentalListings = async (params) => {
@@ -31,7 +31,7 @@ const findSaleListings = async (params) => {
 }
 /**
  * get images of a sale listing
- * @param {Integer} slid listing id 
+ * @param {number} slid listing id 
  * @returns {Promise} a json promise
  */
 const findImagesById = async (slid) => {

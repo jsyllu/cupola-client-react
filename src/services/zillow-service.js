@@ -4,8 +4,8 @@ const API_HOST = process.env["REACT_APP_CUPOLA_API_HOST"]
 
 /**
  * construct the endpoint url
- * @param {String} endpoint 
- * @param {Object} params 
+ * @param {string} endpoint 
+ * @param {object} params 
  * @returns 
  */
  const getEndPointHelper = (endpoint, params) => {
@@ -21,7 +21,7 @@ const API_HOST = process.env["REACT_APP_CUPOLA_API_HOST"]
  * get property based on the parameters
  * required parameters: location - Location details, address or ZIP code.
  * reference: https://developer.mozilla.org/en-US/docs/Learn/JavaScript/Asynchronous/Async_await
- * @param {Object} params 
+ * @param {object} params 
  */
 const getPropertyByFilters = async (params) => {
     const endPoint = getEndPointHelper("propertyExtendedSearch", params)
@@ -42,7 +42,7 @@ const getPropertyByFilters = async (params) => {
 /**
  * get property details based on the id of the property
  * required parameters: zpid - number
- * @param {Object} params 
+ * @param {object} params 
  */
 const getPropertyDetail = async (params) => {
     let endPoint = getEndPointHelper("property", params)
@@ -63,7 +63,7 @@ const getPropertyDetail = async (params) => {
 /**
  * get iamges of a property based on the id of the property
  * required parameters: zpid - number
- * @param {Object} params 
+ * @param {object} params 
  */
 const getPropertyImages = async (params) => {
     let endPoint = getEndPointHelper("images", params)
