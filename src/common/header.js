@@ -1,6 +1,7 @@
 import React, {useEffect, useState} from "react"
 import './header.style.client.css'
 import {Link, useLocation} from "react-router-dom"
+import SearchBar, {PROPERTY_TYPE_RENT, PROPERTY_TYPE_SALE} from "../components/search/search-bar"
 
 const Header = () => {
     // navbar tabs
@@ -13,31 +14,21 @@ const Header = () => {
     const PROFILE = "Profile"
 
     const path = useLocation().pathname
-    const [searchBar, setSearchBar] = useState(false)
+    const [showSearchBar, setShowSearchBar] = useState(false)
     const [type, setType] = useState("")
-    const [searchInput, setSearchInput] = useState("Boston,MA")
     const [clickTab, setClickTab] = useState("")
 
     useEffect(() => {
         if (path.startsWith("/sale/")) {
-            setType("sale")
-            setSearchBar(true)
+            setType(PROPERTY_TYPE_SALE)
+            setShowSearchBar(true)
         } else if (path.startsWith("/rent/")) {
-            setType("rent")
-            setSearchBar(true)
+            setType(PROPERTY_TYPE_RENT)
+            setShowSearchBar(true)
         } else {
-            setSearchBar(false)
+            setShowSearchBar(false)
         }
-        setSearchInput("Boston,MA")
     }, [path])
-
-    const searchForResult = () => {
-        if (searchInput.length < 1) {
-            alert("Please enter a valid address for search")
-        } else {
-            console.log("search this " + searchInput)
-        }
-    }
 
     return (
         // Navbar
@@ -49,18 +40,9 @@ const Header = () => {
                 </Link>
 
                 {
-                    searchBar &&
-                    <div className="search-bar row">
-                        <input className=""
-                               type="text"
-                               placeholder="Enter address"
-                               value={searchInput}
-                               onChange={(e) => setSearchInput(e.target.value)} />
-                        <Link to={`/${type}/${searchInput}`}>
-                            <button className="btn btn-outline-primary">
-                                <i className="fas fa-search"></i>
-                            </button>
-                        </Link>
+                    showSearchBar &&
+                    <div className="navbar-menu">
+                        <SearchBar type={type} />
                     </div>
                 }
 
@@ -111,7 +93,7 @@ const Header = () => {
                         <li className="nav-item dropdown">
                             <a className="nav-link dropdown-toggle fas fa-user-circle"
                                data-toggle="dropdown"
-                               href="#">
+                               href="/">
                                 &nbsp;
                             </a>
                             <div className="dropdown-menu">
@@ -120,9 +102,9 @@ const Header = () => {
                                     {LOGIN}
                                 </Link>
                                 <Link className={`nav-link dropdown-item ${clickTab === REGISTER ? "active" : ""}`}
-                                          to="/register">
-                                        {REGISTER}
-                                    </Link>
+                                      to="/register">
+                                    {REGISTER}
+                                </Link>
                                 <Link className={`nav-link dropdown-item ${clickTab === PROFILE ? "active" : ""}`}
                                       to="/profile">
                                     {PROFILE}
@@ -135,4 +117,5 @@ const Header = () => {
         </nav>
     )
 }
+
 export default Header
