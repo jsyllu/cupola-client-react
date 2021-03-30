@@ -13,15 +13,15 @@ import saleListingReducer from "./reducers/sale-listing-reducer"
 import rentalListingReducer from "./reducers/rental-listing-reducer"
 
 const reducers = combineReducers({
-  saleListingReducer,
-  rentalListingReducer
+    saleListingReducer,
+    rentalListingReducer
 })
 
-const store = createStore(reducers);
+const store = createStore(reducers)
 
 ReactDOM.render(
-  <Provider store={store}>
-    <App />
-  </Provider>,
-  document.getElementById('root')
+    <Provider store={store}>
+        <App />
+    </Provider>,
+    document.getElementById('root')
 )
