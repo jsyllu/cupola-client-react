@@ -1,12 +1,20 @@
+import React from "react"
+
+import {
+    FIND_RENTAL_LISTINGS
+} from "../components/actions/property-actions"
+
 const initialState = {
-    rentalListing : []
+    rentalListings : [
+        // insert rental listings data
+    ]
 };
 
 const rentalListingReducer = (state = initialState, action) => {
     switch (action.type) {
-        case "FIND_PROPERTIES_FOR_RENT":
+        case FIND_RENTAL_LISTINGS:
             return {
-                rentalListing : action.listings
+                rentalListings : action.rentalListings
             }
         default:
             return state

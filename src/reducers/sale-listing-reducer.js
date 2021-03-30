@@ -1,16 +1,25 @@
+import React from "react"
+
+import {
+    FIND_SALE_LISTINGS,
+} from "../components/actions/property-actions"
+
 const initialState = {
-    saleListing : []
+    saleListings : [
+        // insert sale listings data
+    ]
 };
 
 const saleListingReducer = (state = initialState, action) => {
     switch (action.type) {
-        case "FIND_PROPERTIES_FOR_SALE":
+        case FIND_SALE_LISTINGS:
             return {
-                saleListing : action.listings
+                saleListings : action.saleListings
             }
         default:
             return state
     }
+
 }
 
 export default saleListingReducer
