@@ -1,43 +1,30 @@
-import React, {useState} from "react"
+import React from "react"
 import {connect} from "react-redux"
 import {Link} from "react-router-dom"
 import propertyActions from "../actions/property-actions"
-
-// search property types
-export const PROPERTY_TYPE_SALE = "sale"
-export const PROPERTY_TYPE_RENT = "rent"
+import searchBarActions from "../actions/search-bar-actions"
+import {PROPERTY_TYPE_SALE, PROPERTY_TYPE_RENT} from "../../reducers/search-bar-reducer"
 
 const SearchBar = (
     {
-        saleListings = [],
-        rentalListings = [],
-        type,
+        searchType = '',
+        searchInput = '',
+        validateSearchInput,
+        updateSearchInput,
         findSaleListings,
         findRentalListings
     }) => {
 
-    const [searchInput, setSearchInput] = useState("boston, ma")
-
     const getResultForType = () => {
-        if (validSearchInput()) {
-            if (type === PROPERTY_TYPE_SALE) {
+        if (validateSearchInput(searchInput)) {
+            if (searchType === PROPERTY_TYPE_SALE) {
                 findSaleListings(searchInput)
-                // console.log(type)
-                // console.log(searchInput)
-                console.log(saleListings)
-            } else if (type === PROPERTY_TYPE_RENT) {
+            } else if (searchType === PROPERTY_TYPE_RENT) {
                 findRentalListings(searchInput)
-                // console.log(type)
-                // console.log(searchInput)
-                console.log(rentalListings)
             }
         } else {
             alert("Please enter a valid address for search")
         }
-    }
-
-    const validSearchInput = () => {
-        return searchInput.length >= 3
     }
 
     return (
@@ -47,8 +34,8 @@ const SearchBar = (
                        type="text"
                        placeholder="Enter address"
                        value={searchInput}
-                       onChange={(e) => setSearchInput(e.target.value)} />
-                <Link to={`/${type}/${searchInput}`}
+                       onChange={(e) => updateSearchInput(e.target.value)} />
+                <Link to={`/${searchType}/${searchInput}`}
                       onClick={() => getResultForType()}>
                     <button className="btn btn-outline-primary">
                         <i className="fas fa-search"></i>
@@ -60,11 +47,17 @@ const SearchBar = (
 }
 
 const stpm = (state) => ({
-    saleListings: state.saleListingReducer.saleListings,
-    rentalListings: state.rentalListingReducer.rentalListings
+    searchType: state.searchBarReducer.searchType,
+    searchInput: state.searchBarReducer.searchInput
 })
 
 const dtpm = (dispatch) => ({
+    validateSearchInput: (searchInput) => {
+        return searchBarActions.validateSearchInput(searchInput)
+    },
+    updateSearchInput: (newInput) => {
+        searchBarActions.updateSearchInput(dispatch, newInput)
+    },
     findSaleListings: (location) => {
         try {
             propertyActions.findSaleListings(dispatch, {location})
