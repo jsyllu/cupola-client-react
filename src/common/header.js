@@ -1,29 +1,41 @@
-import React, {useEffect, useState} from "react"
+import React, {useEffect, useState} from 'react'
 import './header.style.client.css'
-import {Link, useLocation} from "react-router-dom"
-import SearchBar, {PROPERTY_TYPE_RENT, PROPERTY_TYPE_SALE} from "../components/search/search-bar"
+import {Link, useLocation} from 'react-router-dom'
+import SearchBar from '../components/search/search-bar'
+import {PROPERTY_TYPE_RENT, PROPERTY_TYPE_SALE} from '../reducers/search-bar-reducer'
+import searchBarActions from '../components/actions/search-bar-actions'
+import {connect} from 'react-redux'
 
-const Header = () => {
+const Header = (
+    {
+        searchType = '',
+        searchInput = '',
+        updateSearchType
+    }) => {
+
     // navbar tabs
-    const DISCOVER = "Discover"
-    const BUY = "Buy"
-    const RENT = "Rent"
-    const SELL = "Sell"
-    const LOGIN = "Log In"
-    const REGISTER = "Register"
-    const PROFILE = "Profile"
+    const DISCOVER = 'Discover'
+    const BUY = 'Buy'
+    const RENT = 'Rent'
+    const SELL = 'Sell'
+    const LOGIN = 'Log In'
+    const REGISTER = 'Register'
+    const PROFILE = 'Profile'
 
     const path = useLocation().pathname
     const [showSearchBar, setShowSearchBar] = useState(false)
-    const [type, setType] = useState("")
-    const [clickTab, setClickTab] = useState("")
+    const [clickTab, setClickTab] = useState('')
 
     useEffect(() => {
-        if (path.startsWith("/sale/")) {
-            setType(PROPERTY_TYPE_SALE)
+        if (path.startsWith('/sale/')) {
+            if (searchType !== PROPERTY_TYPE_SALE) {
+                updateSearchType(PROPERTY_TYPE_SALE)
+            }
             setShowSearchBar(true)
-        } else if (path.startsWith("/rent/")) {
-            setType(PROPERTY_TYPE_RENT)
+        } else if (path.startsWith('/rent/')) {
+            if (searchType !== PROPERTY_TYPE_RENT) {
+                updateSearchType(PROPERTY_TYPE_RENT)
+            }
             setShowSearchBar(true)
         } else {
             setShowSearchBar(false)
@@ -42,7 +54,7 @@ const Header = () => {
                 {
                     showSearchBar &&
                     <div className="navbar-menu">
-                        <SearchBar type={type} />
+                        <SearchBar />
                     </div>
                 }
 
@@ -61,30 +73,30 @@ const Header = () => {
                     <ul className="navbar-nav">
                         <li className="nav-item"
                             onClick={() => setClickTab(DISCOVER)}>
-                            <Link className={`nav-link ${clickTab === DISCOVER ? "active" : ""}`}
+                            <Link className={`nav-link ${clickTab === DISCOVER ? 'active' : ''}`}
                                   aria-current="page"
                                   to="/">
                                 {DISCOVER}
                             </Link>
                         </li>
-                        <li className="nav-item"
-                            onClick={() => setClickTab(SELL)}>
-                            <Link className={`nav-link ${clickTab === SELL ? "active" : ""}`}
-                                  to="/">
-                                {SELL}
-                            </Link>
-                        </li>
+                        {/*<li className="nav-item"*/}
+                        {/*    onClick={() => setClickTab(SELL)}>*/}
+                        {/*    <Link className={`nav-link ${clickTab === SELL ? 'active' : ''}`}*/}
+                        {/*          to="/">*/}
+                        {/*        {SELL}*/}
+                        {/*    </Link>*/}
+                        {/*</li>*/}
                         <li className="nav-item"
                             onClick={() => setClickTab(BUY)}>
-                            <Link className={`nav-link ${clickTab === BUY ? "active" : ""}`}
-                                  to="/sale/boston,ma">
+                            <Link className={`nav-link ${clickTab === BUY ? 'active' : ''}`}
+                                  to={`/${PROPERTY_TYPE_SALE}/${searchInput}`}>
                                 {BUY}
                             </Link>
                         </li>
                         <li className="nav-item"
                             onClick={() => setClickTab(RENT)}>
-                            <Link className={`nav-link ${clickTab === RENT ? "active" : ""}`}
-                                  to="/rent/boston,ma">
+                            <Link className={`nav-link ${clickTab === RENT ? 'active' : ''}`}
+                                  to={`/${PROPERTY_TYPE_RENT}/${searchInput}`}>
                                 {RENT}
                             </Link>
                         </li>
@@ -97,15 +109,15 @@ const Header = () => {
                                 &nbsp;
                             </a>
                             <div className="dropdown-menu">
-                                <Link className={`nav-link dropdown-item ${clickTab === LOGIN ? "active" : ""}`}
+                                <Link className={`nav-link dropdown-item ${clickTab === LOGIN ? 'active' : ''}`}
                                       to="/login">
                                     {LOGIN}
                                 </Link>
-                                <Link className={`nav-link dropdown-item ${clickTab === REGISTER ? "active" : ""}`}
+                                <Link className={`nav-link dropdown-item ${clickTab === REGISTER ? 'active' : ''}`}
                                       to="/register">
                                     {REGISTER}
                                 </Link>
-                                <Link className={`nav-link dropdown-item ${clickTab === PROFILE ? "active" : ""}`}
+                                <Link className={`nav-link dropdown-item ${clickTab === PROFILE ? 'active' : ''}`}
                                       to="/profile">
                                     {PROFILE}
                                 </Link>
@@ -118,4 +130,16 @@ const Header = () => {
     )
 }
 
-export default Header
+const stpm = (state) => ({
+    searchType: state.searchBarReducer.searchType,
+    searchInput: state.searchBarReducer.searchInput
+})
+
+
+const dtpm = (dispatch) => ({
+    updateSearchType: (newType) => searchBarActions.updateSearchType(dispatch, newType)
+})
+
+export default connect
+(stpm, dtpm)
+(Header)
