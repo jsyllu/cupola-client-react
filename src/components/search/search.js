@@ -1,10 +1,15 @@
-import React, {useState} from "react"
+import React from "react"
+import {connect} from "react-redux"
 import './search.style.client.css'
-import SearchBar, {PROPERTY_TYPE_RENT, PROPERTY_TYPE_SALE} from "./search-bar"
+import SearchBar from "./search-bar"
+import searchBarActions from "../actions/search-bar-actions"
+import {PROPERTY_TYPE_SALE, PROPERTY_TYPE_RENT} from "../../reducers/search-bar-reducer"
 
-const Search = () => {
-
-    const [type, setType] = useState(PROPERTY_TYPE_SALE)
+const Search = (
+    {
+        searchType = '',
+        updateSearchType
+    }) => {
 
     return (
         <div className="search container">
@@ -19,8 +24,8 @@ const Search = () => {
                        id={PROPERTY_TYPE_SALE}
                        type="radio"
                        name="type-radio"
-                       checked={type === PROPERTY_TYPE_SALE}
-                       onClick={() => setType(PROPERTY_TYPE_SALE)} />
+                       checked={searchType === PROPERTY_TYPE_SALE}
+                       onClick={() => updateSearchType(PROPERTY_TYPE_SALE)} />
                 <label htmlFor={PROPERTY_TYPE_RENT}>
                     Rent
                 </label>
@@ -28,15 +33,25 @@ const Search = () => {
                        id={PROPERTY_TYPE_RENT}
                        type="radio"
                        name="type-radio"
-                       checked={type === PROPERTY_TYPE_RENT}
-                       onClick={() => setType(PROPERTY_TYPE_RENT)} />
+                       checked={searchType === PROPERTY_TYPE_RENT}
+                       onClick={() => updateSearchType(PROPERTY_TYPE_RENT)} />
                 <div className="slide-item"></div>
             </div>
             <div className="search-property-location">
-                <SearchBar type={type} />
+                <SearchBar />
             </div>
         </div>
     )
 }
 
-export default Search
+const stpm = (state) => ({
+    searchType: state.searchBarReducer.searchType
+})
+
+const dtpm = (dispatch) => ({
+    updateSearchType: (newType) => searchBarActions.updateSearchType(dispatch, newType)
+})
+
+export default connect
+(stpm, dtpm)
+(Search)

@@ -1,21 +1,34 @@
-import React, {useEffect} from "react"
-import {useParams} from "react-router-dom"
-import {Helmet} from "react-helmet"
-import {connect} from "react-redux"
-import propertyActions from "../actions/property-actions"
-import ListingCard from "./listing-card"
-import {PROPERTY_TYPE_SALE} from "../search/search-bar"
+import React, {useEffect} from 'react'
+import {useParams} from 'react-router-dom'
+import {Helmet} from 'react-helmet'
+import {connect} from 'react-redux'
+import propertyActions from '../actions/property-actions'
+import ListingCard from './listing-card'
+import {PROPERTY_TYPE_SALE} from '../../reducers/search-bar-reducer'
+import searchBarActions from '../actions/search-bar-actions'
 
 const SaleSearchResult = (
     {
+        searchInput = '',
         saleListings = [],
+        validateSearchInput,
+        updateSearchInput,
         findSaleListings
     }) => {
 
     const {location} = useParams()
 
     useEffect(() => {
-        findSaleListings(location)
+        // update search input with {@param location}
+        if (location !== searchInput) {
+            updateSearchInput(location)
+        }
+        // find listings for valid search input
+        if (validateSearchInput(searchInput)) {
+            findSaleListings(searchInput)
+        } else {
+            alert("Please enter a valid address for search")
+        }
     }, [location])
 
     return (
@@ -43,10 +56,17 @@ const SaleSearchResult = (
 }
 
 const stpm = (state) => ({
+    searchInput: state.searchBarReducer.searchInput,
     saleListings: state.saleListingReducer.saleListings
 })
 
 const dtpm = (dispatch) => ({
+    validateSearchInput: (searchInput) => {
+        return searchBarActions.validateSearchInput(searchInput)
+    },
+    updateSearchInput: (newInput) => {
+        searchBarActions.updateSearchInput(dispatch, newInput)
+    },
     findSaleListings: (location) => {
         try {
             propertyActions.findSaleListings(dispatch, {location})
