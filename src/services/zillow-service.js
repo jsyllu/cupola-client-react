@@ -25,7 +25,7 @@ const API_KEY = process.env.REACT_APP_CUPOLA_ZILLOW_API_KEY
  */
 const getPropertyByFilters = async (params) => {
     const endPoint = getEndPointHelper("propertyExtendedSearch", params)
-
+    console.log(endPoint)
     let response = await fetch(endPoint, {
         method : "GET",
         headers : {
