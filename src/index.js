@@ -9,10 +9,12 @@ import './index.css'
 import App from './App'
 import {combineReducers, createStore} from "redux"
 import {Provider} from "react-redux"
+import searchBarReducer from "./reducers/search-bar-reducer"
 import saleListingReducer from "./reducers/sale-listing-reducer"
 import rentalListingReducer from "./reducers/rental-listing-reducer"
 
 const reducers = combineReducers({
+    searchBarReducer,
     saleListingReducer,
     rentalListingReducer
 })
