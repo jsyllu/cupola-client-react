@@ -1,11 +1,12 @@
 import zillowService from "./zillow-service"
+
 /**
  * get the listing detail
  * @param {Number} slid
  * @returns {Promise} a json promise
  */
 const findListingById = async (slid) => {
-    return zillowService.getPropertyDetail({"zpid" : slid})
+    return zillowService.getPropertyDetail({"zpid": slid})
 }
 /**
  * find properties for sale based on different filters
@@ -15,7 +16,7 @@ const findListingById = async (slid) => {
 const findSaleListings = async (params) => {
     return zillowService.getPropertyByFilters({
         ...params,
-        "status_type" : "ForSale"
+        "status_type": "ForSale"
     })
 }
 /**
@@ -23,10 +24,10 @@ const findSaleListings = async (params) => {
  * @param {Object} params - a object that includes the filters information, required parameter - location : string
  * @returns {Promise} a json promise
  */
- const findRentalListings = async (params) => {
+const findRentalListings = async (params) => {
     return zillowService.getPropertyByFilters({
         ...params,
-        "status_type" : "ForRent"
+        "status_type": "ForRent"
     })
 }
 /**
@@ -35,7 +36,7 @@ const findSaleListings = async (params) => {
  * @returns {Promise} a json promise
  */
 const findImagesById = async (slid) => {
-    return zillowService.getPropertyImages({"zpid" : slid})
+    return zillowService.getPropertyImages({"zpid": slid})
 }
 
 const listingService = {

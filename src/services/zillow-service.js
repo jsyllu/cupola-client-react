@@ -4,11 +4,11 @@ const API_KEY = process.env.REACT_APP_CUPOLA_ZILLOW_API_KEY
 
 /**
  * construct the endpoint url
- * @param {String} endpoint 
- * @param {Object} params 
- * @returns 
+ * @param {String} endpoint
+ * @param {Object} params
+ * @returns
  */
- const getEndPointHelper = (endpoint, params) => {
+const getEndPointHelper = (endpoint, params) => {
     let endPoint = URL + `/${endpoint}?`
 
     for (const prop in params) {
@@ -21,17 +21,17 @@ const API_KEY = process.env.REACT_APP_CUPOLA_ZILLOW_API_KEY
  * get property based on the parameters
  * required parameters: location - Location details, address or ZIP code.
  * reference: https://developer.mozilla.org/en-US/docs/Learn/JavaScript/Asynchronous/Async_await
- * @param {Object} params 
+ * @param {Object} params
  */
 const getPropertyByFilters = async (params) => {
     const endPoint = getEndPointHelper("propertyExtendedSearch", params)
     console.log(endPoint)
     let response = await fetch(endPoint, {
-        method : "GET",
-        headers : {
-            "content-type" : "application/json; charset=UTF-8",
-            "x-rapidapi-key" : API_KEY,
-            "x-rapidapi-host" : API_HOST
+        method: "GET",
+        headers: {
+            "content-type": "application/json; charset=UTF-8",
+            "x-rapidapi-key": API_KEY,
+            "x-rapidapi-host": API_HOST
         }
     })
     if (!response.ok) {
@@ -42,17 +42,17 @@ const getPropertyByFilters = async (params) => {
 /**
  * get property details based on the id of the property
  * required parameters: zpid - number
- * @param {Object} params 
+ * @param {Object} params
  */
 const getPropertyDetail = async (params) => {
     let endPoint = getEndPointHelper("property", params)
 
     let response = await fetch(endPoint, {
-        method : "GET",
-        headers : {
-            "content-type" : "application/json; charset=UTF-8",
-            "x-rapidapi-key" : API_KEY,
-            "x-rapidapi-host" : API_HOST
+        method: "GET",
+        headers: {
+            "content-type": "application/json; charset=UTF-8",
+            "x-rapidapi-key": API_KEY,
+            "x-rapidapi-host": API_HOST
         }
     })
     if (!response.ok) {
@@ -61,19 +61,19 @@ const getPropertyDetail = async (params) => {
     return response.json()
 }
 /**
- * get iamges of a property based on the id of the property
+ * get images of a property based on the id of the property
  * required parameters: zpid - number
- * @param {Object} params 
+ * @param {Object} params
  */
 const getPropertyImages = async (params) => {
     let endPoint = getEndPointHelper("images", params)
 
     let response = await fetch(endPoint, {
-        method : "GET",
-        headers : {
-            "content-type" : "application/json; charset=UTF-8",
-            "x-rapidapi-key" : API_KEY,
-            "x-rapidapi-host" : API_HOST
+        method: "GET",
+        headers: {
+            "content-type": "application/json; charset=UTF-8",
+            "x-rapidapi-key": API_KEY,
+            "x-rapidapi-host": API_HOST
         }
     })
     if (!response.ok) {
