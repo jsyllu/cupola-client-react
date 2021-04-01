@@ -144,11 +144,11 @@ const Register = () => {
                         <label className="checkbox-inline">
                             <input type="checkbox" required />
                             &nbsp;I accept the&nbsp;
-                            <a href="#">
+                            <a href="/">
                                 Term of Use
                             </a>
                             &nbsp;&&nbsp;
-                            <a href="#">
+                            <a href="/">
                                 Privacy Policy
                             </a>
                         </label>

@@ -44,7 +44,7 @@ const LogIn = () => {
                                    value="remember-me" />
                             &nbsp;Remember me
                         </label>
-                        <a href="#">
+                        <a href="/">
                             Forgot Password
                         </a>
                     </div>
