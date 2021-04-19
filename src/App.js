@@ -34,9 +34,7 @@ function App() {
                 <Route path="/register"
                        exact={true}
                        component={Register} />
-                <Route path={[
-                    "/profile",
-                    "/profile/:role"]}
+                <Route path="/profile"
                        exact={true}
                        component={UserProfile} />
                 <Route path="/sale/:location"

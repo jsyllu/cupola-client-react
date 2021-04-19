@@ -12,11 +12,13 @@ import {Provider} from "react-redux"
 import searchBarReducer from "./reducers/search-bar-reducer"
 import saleListingReducer from "./reducers/sale-listing-reducer"
 import rentalListingReducer from "./reducers/rental-listing-reducer"
+import userReducer from './reducers/user-reducer'
 
 const reducers = combineReducers({
     searchBarReducer,
     saleListingReducer,
-    rentalListingReducer
+    rentalListingReducer,
+    userReducer
 })
 
 const store = createStore(reducers)
