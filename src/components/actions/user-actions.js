@@ -32,6 +32,7 @@ export const registerUser = (dispatch, user) => {
                     user
                 })
                 saveLogInSession(user)
+                console.log('registered & logged in')
             } else {
                 console.log('Failed to register a new user')
             }
@@ -59,13 +60,13 @@ export const updateUser = (dispatch, uid, user) => {
 export const logInUser = (dispatch, credential) => {
     userService.logInUser(credential)
         .then((user) => {
-            console.log(user)
             if (user !== undefined) {
                 dispatch({
                     type: LOG_IN_USER,
                     user
                 })
                 saveLogInSession(user)
+                console.log('logged in')
             } else {
                 console.log('Invalid user object received')
             }

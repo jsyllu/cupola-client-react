@@ -22,16 +22,17 @@ const Register = (
     }, [])
 
     useEffect(() => {
-        console.log(currUser)
         if (currUser._id !== undefined) {
             // registered and logged in successfully, redirect to profile page
             history.push('/profile')
         }
     }, [currUser])
 
-    const submitRegisterRequest = () => {
+    useEffect(() => {
         setUser({...user, [profile]: {}})
-        console.log(user)
+    }, [profile])
+
+    const submitRegisterRequest = () => {
         registerUser(user)
     }
 
@@ -150,19 +151,6 @@ const Register = (
                             </option>
                         </select>
                     </div>
-                    {/*<div className="form-group">*/}
-                    {/*    <label className="checkbox-inline">*/}
-                    {/*        <input type="checkbox" required />*/}
-                    {/*        &nbsp;I accept the&nbsp;*/}
-                    {/*        <a href="/">*/}
-                    {/*            Term of Use*/}
-                    {/*        </a>*/}
-                    {/*        &nbsp;&&nbsp;*/}
-                    {/*        <a href="/">*/}
-                    {/*            Privacy Policy*/}
-                    {/*        </a>*/}
-                    {/*    </label>*/}
-                    {/*</div>*/}
                     <div className="form-group">
                         <button className="btn btn-primary btn-block"
                                 type='submit'

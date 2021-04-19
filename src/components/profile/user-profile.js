@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from "react"
 import {Helmet} from "react-helmet"
-import {useHistory} from "react-router-dom"
+import {Link, useHistory} from "react-router-dom"
 import SellerProfile from "./seller-profile"
 import BuyerProfile from "./buyer-profile"
 import LandlordProfile from "./landlord-profile"
@@ -12,7 +12,8 @@ const UserProfile = (
     {
         currUser = {},
         findUserById,
-        updateUser
+        updateUser,
+        deleteUser
     }) => {
 
     const SELLER_PROFILE = "sellerProfile"
@@ -107,6 +108,17 @@ const UserProfile = (
 
             <div className="user-profile container">
                 <h1>Hello, {currUser.firstName}</h1>
+                <div className="btn-group">
+                    <Link className="btn btn-outline-warning"
+                          to="/profile/update">
+                        Update Account
+                    </Link>
+                    <button className="btn btn-outline-danger"
+                            onClick={() => deleteUser(currUser._id)}>
+                        Delete Account
+                    </button>
+                </div>
+                <hr />
                 <div className="user-profile-tab-list">
                     <button className="user-profile-tab"
                             onClick={() => handleTabClick(SELLER_PROFILE)}>
@@ -142,7 +154,8 @@ const stpm = (state) => ({
 
 const dtpm = (dispatch) => ({
     findUserById: (uid) => userActions.findUserById(dispatch, uid),
-    updateUser: (uid, user) => userActions.updateUser(dispatch, uid, user)
+    updateUser: (uid, user) => userActions.updateUser(dispatch, uid, user),
+    deleteUser: (uid) => userActions.deleteUser(dispatch, uid)
 })
 
 export default connect
