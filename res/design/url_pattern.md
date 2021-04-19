@@ -12,13 +12,6 @@ To implement a RESTful API.
 
 `/profile/:uid` - User Profile
 
-`/profile/:uid/:role` - User Profile with Role specified
-
-+ `/profile/:uid/seller` - Seller Profile
-+ `/profile/:uid/buyer` - Buyer Profile
-+ `/profile/:uid/landlord` - Landlord Profile
-+ `/profile/:uid/tenant` - Tenant Profile
-
 `/:type/:location` - Search Result, Sale or Rent
 
 - `/sale/:location` - Search Result of Properties for Sale
