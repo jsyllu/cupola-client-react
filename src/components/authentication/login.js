@@ -28,7 +28,6 @@ const LogIn = (
     }, [currUser])
 
     const submitLogInRequest = () => {
-        console.log(credential)
         logInUser(credential)
     }
 

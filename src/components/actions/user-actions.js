@@ -33,7 +33,7 @@ export const registerUser = (dispatch, user) => {
                 })
                 saveLogInSession(user)
             } else {
-                console.log('Invalid user object received')
+                console.log('Failed to register a new user')
             }
         }).catch(err => console.log(err))
 }
@@ -74,7 +74,8 @@ export const logInUser = (dispatch, credential) => {
 
 export const logOutUser = (dispatch) => {
     userService.logOutUser()
-        .then(() => {
+        .then((res) => {
+            console.log(res)
             dispatch({
                 type: LOG_OUT_USER
             })

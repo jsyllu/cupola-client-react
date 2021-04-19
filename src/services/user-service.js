@@ -52,8 +52,12 @@ const logInUser = (credential) =>
         .catch(err => console.log(err))
 
 const logOutUser = () =>
-    fetch(`${SERVER_URL}/profile/logout`)
-        .then(res => res.json())
+    fetch(`${SERVER_URL}/profile/logout`, {
+        method: 'POST',
+        headers: {
+            'content-type': 'application/json'
+        }
+    }).then(res => res.json())
         .catch(err => console.log(err))
 
 const userService = {
