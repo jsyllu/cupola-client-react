@@ -76,36 +76,6 @@ const Register = (
                                    required />
                         </div>
                     </div>
-                    {/*<div className="form-group">*/}
-                    {/*    <span className="form-control-icon">*/}
-                    {/*        <i className="fa fa-user"*/}
-                    {/*           aria-hidden="true"></i>*/}
-                    {/*    </span>*/}
-                    {/*    <label htmlFor="inputUsername"*/}
-                    {/*           className="sr-only">*/}
-                    {/*        Username</label>*/}
-                    {/*    <input className="form-control"*/}
-                    {/*           id="inputUsername"*/}
-                    {/*           type="text" name="username"*/}
-                    {/*           placeholder="Username"*/}
-                    {/*           onChange={(e) => setUser(*/}
-                    {/*               {...user, username: e.target.value})}*/}
-                    {/*           required />*/}
-                    {/*</div>*/}
-                    {/*    <div className="form-group">*/}
-                    {/*<span className="form-control-icon">*/}
-                    {/*    <i className="fa fa-calendar"*/}
-                    {/*       aria-hidden="true"></i>*/}
-                    {/*</span>*/}
-                    {/*        <label htmlFor="inputDOB"*/}
-                    {/*               className="sr-only">*/}
-                    {/*            Date*/}
-                    {/*        </label>*/}
-                    {/*        <input className="form-control"*/}
-                    {/*               type="date"*/}
-                    {/*               id="inputDOB"*/}
-                    {/*               data-inputmask="'alias': 'date'" />*/}
-                    {/*    </div>*/}
                     <div className="form-group">
                         <span className="form-control-icon">
                             <i className="fas fa-envelope"></i>
@@ -155,19 +125,6 @@ const Register = (
                                placeholder="Password"
                                onChange={(e) => setUser(
                                    {...user, password: e.target.value})}
-                               required />
-                    </div>
-                    <div className="form-group">
-                        <span className="form-control-icon">
-                            <i className="fas fa-key"></i>
-                        </span>
-                        <label htmlFor="inputConfirmPassword"
-                               className="sr-only">
-                            Confirm Password</label>
-                        <input className="form-control"
-                               id="inputConfirmPassword"
-                               type="password"
-                               placeholder="Confirm Password"
                                required />
                     </div>
                     <div className="form-group">
