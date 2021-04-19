@@ -1,10 +1,42 @@
-import React from 'react'
-import {Link} from "react-router-dom"
+import React, {useEffect, useState} from 'react'
+import {Link, useHistory} from "react-router-dom"
 import './auth.style.client.css'
+import userActions from '../actions/user-actions'
+import {connect} from 'react-redux'
+import {Helmet} from 'react-helmet'
 
-const LogIn = () => {
+const LogIn = (
+    {
+        currUser = {},
+        logInUser
+    }) => {
+
+    const history = useHistory()
+    const [credential, setCredential] = useState()
+
+    useEffect(() => {
+        if (localStorage.getItem('isLoggedIn') === 'true') {
+            history.push('/profile')
+        }
+    }, [])
+
+    useEffect(() => {
+        if (currUser._id !== undefined) {
+            // registered and logged in successfully, redirect to profile page
+            history.push('/profile')
+        }
+    }, [currUser])
+
+    const submitLogInRequest = () => {
+        console.log(credential)
+        logInUser(credential)
+    }
+
     return (
         <div className="container">
+            <Helmet>
+                <title>Log In | Cupola</title>
+            </Helmet>
             <div className="login-form">
                 <form action="">
                     <h2 className="text-center">Log In</h2>
@@ -18,6 +50,8 @@ const LogIn = () => {
                                id="inputEmail"
                                type="email"
                                placeholder="Email Address"
+                               onChange={(e) => setCredential(
+                                   {...credential, email: e.target.value})}
                                required autoFocus />
                     </div>
                     <div className="form-group">
@@ -29,12 +63,17 @@ const LogIn = () => {
                                id="inputPassword"
                                type="password"
                                placeholder="Password"
+                               onChange={(e) => setCredential(
+                                   {...credential, password: e.target.value})}
                                required />
                     </div>
-                    <div className="form-group">
+                    <div className="">
                         <button className="btn btn-primary btn-block"
                                 type="submit"
-                                onClick="location.href='../profile/profile.template.client.html'">
+                                onClick={(e) => {
+                                    e.preventDefault()
+                                    submitLogInRequest()
+                                }}>
                             Log in
                         </button>
                     </div>
@@ -65,4 +104,13 @@ const LogIn = () => {
     )
 }
 
-export default LogIn
+const stpm = (state) => ({
+    currUser: state.userReducer.currUser
+})
+const dtpm = (dispatch) => ({
+    logInUser: (credential) => userActions.logInUser(dispatch, credential)
+})
+
+export default connect
+(stpm, dtpm)
+(LogIn)
