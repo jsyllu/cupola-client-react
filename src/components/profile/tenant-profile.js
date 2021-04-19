@@ -1,10 +1,18 @@
 import React from "react"
 
-const TenantProfile = () => {
+const TenantProfile = (
+    {
+        openProfile
+    }) => {
     return (
-        <div className="tenant-profile container">
-            <h2>Tenant Profile</h2>
-        </div>
+        <>
+            {
+                openProfile &&
+                <div className="profile container">
+                    <h2>Tenant Profile</h2>
+                </div>
+            }
+        </>
     )
 }
 
