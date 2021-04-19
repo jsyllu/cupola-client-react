@@ -1,10 +1,45 @@
-import React from 'react'
-import {Link} from 'react-router-dom'
+import React, {useEffect, useState} from 'react'
+import {Link, useHistory} from 'react-router-dom'
 import './auth.style.client.css'
+import {connect} from 'react-redux'
+import userActions from '../actions/user-actions'
+import {Helmet} from 'react-helmet'
 
-const Register = () => {
+const Register = (
+    {
+        currUser = {},
+        registerUser
+    }) => {
+
+    const history = useHistory()
+    const [user, setUser] = useState({})
+    const [profile, setProfile] = useState('sellerProfile')
+
+    useEffect(() => {
+        if (localStorage.getItem('isLoggedIn') === 'true') {
+            history.push('/profile')
+        }
+    }, [])
+
+    useEffect(() => {
+        console.log(currUser)
+        if (currUser._id !== undefined) {
+            // registered and logged in successfully, redirect to profile page
+            history.push('/profile')
+        }
+    }, [currUser])
+
+    const submitRegisterRequest = () => {
+        setUser({...user, [profile]: {}})
+        console.log(user)
+        registerUser(user)
+    }
+
     return (
         <div className="container">
+            <Helmet>
+                <title>Register | Cupola</title>
+            </Helmet>
             <div className="signup-form">
                 <form action="">
                     <h2 className="text-center">
@@ -22,6 +57,8 @@ const Register = () => {
                                    id="inputFirstName"
                                    name="first_name"
                                    placeholder="First Name"
+                                   onChange={(e) => setUser(
+                                       {...user, firstName: e.target.value})}
                                    required autoFocus />
                         </div>
                         <label htmlFor="inputLastName"
@@ -34,41 +71,45 @@ const Register = () => {
                                    id="inputLastName"
                                    name="last_name"
                                    placeholder="Last Name"
+                                   onChange={(e) => setUser(
+                                       {...user, lastName: e.target.value})}
                                    required />
                         </div>
                     </div>
+                    {/*<div className="form-group">*/}
+                    {/*    <span className="form-control-icon">*/}
+                    {/*        <i className="fa fa-user"*/}
+                    {/*           aria-hidden="true"></i>*/}
+                    {/*    </span>*/}
+                    {/*    <label htmlFor="inputUsername"*/}
+                    {/*           className="sr-only">*/}
+                    {/*        Username</label>*/}
+                    {/*    <input className="form-control"*/}
+                    {/*           id="inputUsername"*/}
+                    {/*           type="text" name="username"*/}
+                    {/*           placeholder="Username"*/}
+                    {/*           onChange={(e) => setUser(*/}
+                    {/*               {...user, username: e.target.value})}*/}
+                    {/*           required />*/}
+                    {/*</div>*/}
+                    {/*    <div className="form-group">*/}
+                    {/*<span className="form-control-icon">*/}
+                    {/*    <i className="fa fa-calendar"*/}
+                    {/*       aria-hidden="true"></i>*/}
+                    {/*</span>*/}
+                    {/*        <label htmlFor="inputDOB"*/}
+                    {/*               className="sr-only">*/}
+                    {/*            Date*/}
+                    {/*        </label>*/}
+                    {/*        <input className="form-control"*/}
+                    {/*               type="date"*/}
+                    {/*               id="inputDOB"*/}
+                    {/*               data-inputmask="'alias': 'date'" />*/}
+                    {/*    </div>*/}
                     <div className="form-group">
-                <span className="form-control-icon">
-                    <i className="fa fa-user"
-                       aria-hidden="true"></i>
-                </span>
-                        <label htmlFor="inputUsername"
-                               className="sr-only">
-                            Username</label>
-                        <input className="form-control"
-                               id="inputUsername"
-                               type="text" name="username"
-                               placeholder="Username"
-                               required />
-                    </div>
-                    <div className="form-group">
-                <span className="form-control-icon">
-                    <i className="fa fa-calendar"
-                       aria-hidden="true"></i>
-                </span>
-                        <label htmlFor="inputDOB"
-                               className="sr-only">
-                            Date
-                        </label>
-                        <input className="form-control"
-                               type="date"
-                               id="inputDOB"
-                               data-inputmask="'alias': 'date'" />
-                    </div>
-                    <div className="form-group">
-                <span className="form-control-icon">
-                    <i className="fas fa-envelope"></i>
-                </span>
+                        <span className="form-control-icon">
+                            <i className="fas fa-envelope"></i>
+                        </span>
                         <label htmlFor="inputEmail"
                                className="sr-only">
                             Email address
@@ -78,14 +119,16 @@ const Register = () => {
                                type="email"
                                name="email"
                                placeholder="Email"
+                               onChange={(e) => setUser(
+                                   {...user, email: e.target.value})}
                                required />
                     </div>
                     <div className="form-group">
-                <span className="form-control-icon">
-                    <i className="fas fa-phone"
-                       aria-hidden="true">
-                    </i>
-                </span>
+                        <span className="form-control-icon">
+                            <i className="fas fa-phone"
+                               aria-hidden="true">
+                            </i>
+                        </span>
                         <label htmlFor="inputPhone"
                                className="sr-only">
                             Phone Number
@@ -95,12 +138,14 @@ const Register = () => {
                                type="tel"
                                name="phone"
                                placeholder="Phone Number"
+                               onChange={(e) => setUser(
+                                   {...user, phone: e.target.value})}
                                required />
                     </div>
                     <div className="form-group">
-                <span className="form-control-icon">
-                    <i className="fas fa-key"></i>
-                </span>
+                        <span className="form-control-icon">
+                            <i className="fas fa-key"></i>
+                        </span>
                         <label htmlFor="inputPassword"
                                className="sr-only">
                             Password</label>
@@ -108,12 +153,14 @@ const Register = () => {
                                id="inputPassword"
                                type="password"
                                placeholder="Password"
+                               onChange={(e) => setUser(
+                                   {...user, password: e.target.value})}
                                required />
                     </div>
                     <div className="form-group">
-                <span className="form-control-icon">
-                    <i className="fas fa-key"></i>
-                </span>
+                        <span className="form-control-icon">
+                            <i className="fas fa-key"></i>
+                        </span>
                         <label htmlFor="inputConfirmPassword"
                                className="sr-only">
                             Confirm Password</label>
@@ -130,33 +177,42 @@ const Register = () => {
                         <select id="selectRole"
                                 className="col-sm-5"
                                 name="role"
+                                onChange={(e) => setProfile(e.target.value)}
                                 required>
-                            <option value="student"
-                                    selected>
-                                Student
+                            <option value="sellerProfile">
+                                Seller
                             </option>
-                            <option value="instructor">
-                                Instructor
+                            <option value="buyerProfile">
+                                Buyer
+                            </option>
+                            <option value="landlordProfile">
+                                Landlord
+                            </option>
+                            <option value="tenantProfile">
+                                Tenant
                             </option>
                         </select>
                     </div>
-                    <div className="form-group">
-                        <label className="checkbox-inline">
-                            <input type="checkbox" required />
-                            &nbsp;I accept the&nbsp;
-                            <a href="/">
-                                Term of Use
-                            </a>
-                            &nbsp;&&nbsp;
-                            <a href="/">
-                                Privacy Policy
-                            </a>
-                        </label>
-                    </div>
+                    {/*<div className="form-group">*/}
+                    {/*    <label className="checkbox-inline">*/}
+                    {/*        <input type="checkbox" required />*/}
+                    {/*        &nbsp;I accept the&nbsp;*/}
+                    {/*        <a href="/">*/}
+                    {/*            Term of Use*/}
+                    {/*        </a>*/}
+                    {/*        &nbsp;&&nbsp;*/}
+                    {/*        <a href="/">*/}
+                    {/*            Privacy Policy*/}
+                    {/*        </a>*/}
+                    {/*    </label>*/}
+                    {/*</div>*/}
                     <div className="form-group">
                         <button className="btn btn-primary btn-block"
-                                type="submit"
-                                onClick="location.href='../profile/profile.template.client.html'">
+                                type='submit'
+                                onClick={(e) => {
+                                    e.preventDefault()
+                                    submitRegisterRequest()
+                                }}>
                             Sign Up
                         </button>
                     </div>
@@ -178,4 +234,14 @@ const Register = () => {
     )
 }
 
-export default Register
+const stpm = (state) => ({
+    currUser: state.userReducer.currUser
+})
+
+const dtpm = (dispatch) => ({
+    registerUser: (user) => userActions.registerUser(dispatch, user)
+})
+
+export default connect
+(stpm, dtpm)
+(Register)
