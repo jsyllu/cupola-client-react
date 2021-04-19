@@ -13,6 +13,7 @@ import Register from "./components/authentication/register"
 import LogIn from "./components/authentication/login"
 import SaleSearchResult from "./components/search-result/sale-search-result"
 import RentSearchResult from "./components/search-result/rent-search-result"
+import UserProfileUpdate from './components/profile/user-profile-update'
 
 function App() {
     return (
@@ -37,6 +38,9 @@ function App() {
                 <Route path="/profile"
                        exact={true}
                        component={UserProfile} />
+                <Route path="/profile/update"
+                       exact={true}
+                       component={UserProfileUpdate} />
                 <Route path="/sale/:location"
                        exact={true}
                        component={SaleSearchResult} />
