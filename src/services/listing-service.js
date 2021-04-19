@@ -1,4 +1,6 @@
 import zillowService from "./zillow-service"
+// const SERVER_URL = process.env.REACT_APP_SERVER_URL
+const SERVER_URL = 'http://localhost:3001'
 
 /**
  * get the listing detail
@@ -39,8 +41,39 @@ const findImagesById = async (slid) => {
     return zillowService.getPropertyImages({"zpid": slid})
 }
 
+const createProperty = (property) =>
+    fetch(`${SERVER_URL}/property/new`, {
+        method: 'POST',
+        body: JSON.stringify(property),
+        headers: {
+            'content-type': 'application/json'
+        }
+    }).then((res) => res.json())
+        .catch(err => console.log(err))
+
+const createSaleListing = (listing) =>
+    fetch(`${SERVER_URL}/sale/new`, {
+        method: 'POST',
+        body: JSON.stringify(listing),
+        headers: {
+            'content-type': 'application/json'
+        }
+    }).then((res) => res.json())
+        .catch(err => console.log(err))
+
+const createRentalListing = (listing) =>
+    fetch(`${SERVER_URL}/rent/new`, {
+        method: 'POST',
+        body: JSON.stringify(listing),
+        headers: {
+            'content-type': 'application/json'
+        }
+    }).then((res) => res.json())
+        .catch(err => console.log(err))
+
 const listingService = {
-    findListingById, findSaleListings, findImagesById, findRentalListings
+    findListingById, findSaleListings, findImagesById, findRentalListings, createProperty,
+    createSaleListing, createRentalListing
 }
 
 export default listingService

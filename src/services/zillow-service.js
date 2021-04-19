@@ -25,7 +25,7 @@ const getEndPointHelper = (endpoint, params) => {
  */
 const getPropertyByFilters = async (params) => {
     const endPoint = getEndPointHelper("propertyExtendedSearch", params)
-    console.log(endPoint)
+
     let response = await fetch(endPoint, {
         method: "GET",
         headers: {
