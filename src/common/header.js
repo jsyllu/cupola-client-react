@@ -5,12 +5,14 @@ import SearchBar from '../components/search/search-bar'
 import {PROPERTY_TYPE_RENT, PROPERTY_TYPE_SALE} from '../reducers/search-bar-reducer'
 import searchBarActions from '../components/actions/search-bar-actions'
 import {connect} from 'react-redux'
+import userActions from '../components/actions/user-actions'
 
 const Header = (
     {
         searchType = '',
         searchInput = '',
-        updateSearchType
+        updateSearchType,
+        logOutUser
     }) => {
 
     // navbar tabs
@@ -22,9 +24,14 @@ const Header = (
     const REGISTER = 'Register'
     const PROFILE = 'Profile'
 
+    const [isLoggedIn, setIsLoggedIn] = useState(false)
     const path = useLocation().pathname
     const [showSearchBar, setShowSearchBar] = useState(false)
     const [clickTab, setClickTab] = useState('')
+
+    useEffect(() => {
+        setIsLoggedIn(localStorage.getItem('isLoggedIn') === 'true')
+    }, [localStorage.getItem('isLoggedIn')])
 
     useEffect(() => {
         if (path.startsWith('/sale/')) {
@@ -41,6 +48,11 @@ const Header = (
             setShowSearchBar(false)
         }
     }, [path])
+
+    const submitLogOutRequest = () => {
+        logOutUser()
+        setIsLoggedIn(false)
+    }
 
     return (
         // Navbar
@@ -109,18 +121,34 @@ const Header = (
                                 &nbsp;
                             </a>
                             <div className="dropdown-menu">
-                                <Link className={`nav-link dropdown-item ${clickTab === LOGIN ? 'active' : ''}`}
-                                      to="/login">
-                                    {LOGIN}
-                                </Link>
-                                <Link className={`nav-link dropdown-item ${clickTab === REGISTER ? 'active' : ''}`}
-                                      to="/register">
-                                    {REGISTER}
-                                </Link>
-                                <Link className={`nav-link dropdown-item ${clickTab === PROFILE ? 'active' : ''}`}
-                                      to="/profile">
-                                    {PROFILE}
-                                </Link>
+                                {
+                                    !isLoggedIn &&
+                                    <>
+                                        <Link className={`nav-link dropdown-item ${clickTab === LOGIN ? 'active' : ''}`}
+                                              to="/login">
+                                            {LOGIN}
+                                        </Link>
+                                        <Link
+                                            className={`nav-link dropdown-item ${clickTab === REGISTER ? 'active' : ''}`}
+                                            to="/register">
+                                            {REGISTER}
+                                        </Link>
+                                    </>
+                                }
+                                {
+                                    isLoggedIn &&
+                                    <>
+                                        <Link
+                                            className={`nav-link dropdown-item ${clickTab === PROFILE ? 'active' : ''}`}
+                                            to="/profile">
+                                            {PROFILE}
+                                        </Link>
+                                        <button className="nav-link dropdown-item"
+                                                onClick={() => submitLogOutRequest()}>
+                                            Log Out
+                                        </button>
+                                    </>
+                                }
                             </div>
                         </li>
                     </ul>
@@ -131,13 +159,15 @@ const Header = (
 }
 
 const stpm = (state) => ({
+    currUser: state.userReducer.currUser,
     searchType: state.searchBarReducer.searchType,
     searchInput: state.searchBarReducer.searchInput
 })
 
 
 const dtpm = (dispatch) => ({
-    updateSearchType: (newType) => searchBarActions.updateSearchType(dispatch, newType)
+    updateSearchType: (newType) => searchBarActions.updateSearchType(dispatch, newType),
+    logOutUser: () => userActions.logOutUser(dispatch)
 })
 
 export default connect
