@@ -60,10 +60,52 @@ const logOutUser = () =>
     }).then(res => res.json())
         .catch(err => console.log(err))
 
+const getBuyerWishlist = (wishlist) =>
+    fetch(`${SERVER_URL}/profile/wishlist/sale`, {
+        method: 'POST',
+        body: JSON.stringify(wishlist),
+        headers: {
+            'content-type': 'application/json'
+        }
+    }).then(res => res.json())
+        .catch(err => console.log(err))
+
+const getTenantWishlist = (wishlist) =>
+    fetch(`${SERVER_URL}/profile/wishlist/rent`, {
+        method: 'POST',
+        body: JSON.stringify(wishlist),
+        headers: {
+            'content-type': 'application/json'
+        }
+    }).then(res => res.json())
+        .catch(err => console.log(err))
+
+const getSellerPost = (post) =>
+    fetch(`${SERVER_URL}/profile/post/sale`, {
+        method: 'POST',
+        body: JSON.stringify(post),
+        headers: {
+            'content-type': 'application/json'
+        }
+    }).then(res => res.json())
+        .catch(err => console.log(err))
+
+const getLenderPost = (post) =>
+    fetch(`${SERVER_URL}/profile/post/rent`, {
+        method: 'POST',
+        body: JSON.stringify(post),
+        headers: {
+            'content-type': 'application/json'
+        }
+    }).then(res => res.json())
+        .catch(err => console.log(err))
+
 const userService = {
     findUserById, findAllUsers,
     registerUser, deleteUser,updateUser,
-    logInUser, logOutUser
+    logInUser, logOutUser,
+    getTenantWishlist, getBuyerWishlist,
+    getLenderPost, getSellerPost
 }
 
 export default userService

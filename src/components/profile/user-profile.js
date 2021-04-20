@@ -7,6 +7,7 @@ import LandlordProfile from "./landlord-profile"
 import TenantProfile from "./tenant-profile"
 import {connect} from 'react-redux'
 import userActions from '../actions/user-actions'
+import './user-profile.style.client.css'
 
 const UserProfile = (
     {
@@ -58,6 +59,7 @@ const UserProfile = (
         if (currUser[profile] === undefined) {
             createProfile(profile)
         }
+        console.log(currUser[profile])
         // open the selected profile
         openSelectedProfile(profile)
     }
@@ -100,6 +102,11 @@ const UserProfile = (
         }
     }
 
+    const deleteAccount = () => {
+        deleteUser(currUser._id)
+        alert('Account has been deleted')
+    }
+
     return (
         <>
             <Helmet>
@@ -109,37 +116,47 @@ const UserProfile = (
             <div className="user-profile container">
                 <h1>Hello, {currUser.firstName}</h1>
                 <div className="btn-group">
-                    <Link className="btn btn-outline-warning"
+                    <Link className="btn btn-outline-success"
                           to="/profile/update">
-                        Update Account
+                        Update Profile
                     </Link>
                     <button className="btn btn-outline-danger"
-                            onClick={() => deleteUser(currUser._id)}>
+                            onClick={() => deleteAccount()}>
                         Delete Account
                     </button>
                 </div>
                 <hr />
                 <div className="user-profile-tab-list">
-                    <button className="user-profile-tab"
+                    <button className={`user-profile-tab 
+                    ${currUser[SELLER_PROFILE] === undefined ? CREATE : OPEN} 
+                    ${openProfile === SELLER_PROFILE ? 'active' : ''}`}
                             onClick={() => handleTabClick(SELLER_PROFILE)}>
                         {currUser[SELLER_PROFILE] === undefined ? CREATE : OPEN} {sellerBtn}
                     </button>
-                    <button className="user-profile-tab"
+                    <button className={`user-profile-tab 
+                    ${currUser[BUYER_PROFILE] === undefined ? CREATE : OPEN}
+                     ${openProfile === BUYER_PROFILE ? 'active' : ''}`}
                             onClick={() => handleTabClick(BUYER_PROFILE)}>
                         {currUser[BUYER_PROFILE] === undefined ? CREATE : OPEN} {buyerBtn}
                     </button>
-                    <button className="user-profile-tab"
+                    <button className={`user-profile-tab 
+                    ${currUser[LANDLORD_PROFILE] === undefined ? CREATE : OPEN}
+                        ${openProfile === LANDLORD_PROFILE ? 'active' : ''}`}
                             onClick={() => handleTabClick(LANDLORD_PROFILE)}>
                         {currUser[LANDLORD_PROFILE] === undefined ? CREATE : OPEN} {landlordBtn}
                     </button>
-                    <button className="user-profile-tab"
+                    <button className={`user-profile-tab 
+                    ${currUser[TENANT_PROFILE] === undefined ? CREATE : OPEN}
+                    ${openProfile === TENANT_PROFILE ? 'active' : ''}`}
                             onClick={() => handleTabClick(TENANT_PROFILE)}>
                         {currUser[TENANT_PROFILE] === undefined ? CREATE : OPEN} {tenantBtn}
                     </button>
                 </div>
                 <div className="user-profile-detail">
-                    <SellerProfile openProfile={openProfile === SELLER_PROFILE} />
-                    <BuyerProfile openProfile={openProfile === BUYER_PROFILE} />
+                    <SellerProfile uid={currUser._id}
+                                   openProfile={openProfile === SELLER_PROFILE} />
+                    <BuyerProfile profile={currUser.buyerProfile}
+                                    openProfile={openProfile === BUYER_PROFILE} />
                     <LandlordProfile openProfile={openProfile === LANDLORD_PROFILE} />
                     <TenantProfile openProfile={openProfile === TENANT_PROFILE} />
                 </div>

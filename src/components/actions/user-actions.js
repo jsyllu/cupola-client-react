@@ -6,13 +6,21 @@ export const REGISTER_USER = 'REGISTER_USER'
 export const UPDATE_USER = 'UPDATE_USER'
 export const LOG_OUT_USER = 'LOG_OUT_USER'
 export const LOG_IN_USER = 'LOG_IN_USER'
+export const GET_BUYER_WISHLIST = 'GET_BUYER_WISHLIST'
+export const GET_TENANT_WISHLIST = 'GET_TENANT_WISHLIST'
+export const GET_SELLER_POST = 'GET_SELLER_POST'
+export const GET_LENDER_POST = 'GET_LENDER_POST'
+export const UPDATE_BUYER_WISHLIST = 'UPDATE_BUYER_WISHLIST'
+export const UPDATE_TENANT_WISHLIST = 'UPDATE_TENANT_WISHLIST'
+export const UPDATE_SELLER_POST = 'UPDATE_SELLER_POST'
+export const UPDATE_LENDER_POST = 'UPDATE_LENDER_POST'
 
 export const findUserById = (dispatch, uid) => {
     userService.findUserById(uid)
         .then((user) => dispatch({
             type: FIND_USER_BY_ID,
             user
-        }))
+        })).catch(err => console.log(err))
 }
 
 export const findAllUsers = (dispatch, uid) => {
@@ -20,7 +28,7 @@ export const findAllUsers = (dispatch, uid) => {
         .then((users) => dispatch({
             type: FIND_ALL_USERS,
             allUsers: users
-        }))
+        })).catch(err => console.log(err))
 }
 
 export const registerUser = (dispatch, user) => {
@@ -46,7 +54,7 @@ export const deleteUser = (dispatch, uid) => {
                 type: LOG_OUT_USER
             })
             clearLogInSession()
-        })
+        }).catch(err => console.log(err))
 }
 
 export const updateUser = (dispatch, uid, user) => {
@@ -54,7 +62,7 @@ export const updateUser = (dispatch, uid, user) => {
         .then((user) => dispatch({
             type: UPDATE_USER,
             user
-        }))
+        })).catch(err => console.log(err))
 }
 
 export const logInUser = (dispatch, credential) => {
@@ -81,7 +89,70 @@ export const logOutUser = (dispatch) => {
                 type: LOG_OUT_USER
             })
             clearLogInSession()
-        })
+        }).catch(err => console.log(err))
+}
+
+export const getBuyerWishlist = (dispatch, wishlist) => {
+    userService.getBuyerWishlist(wishlist)
+        .then(wishlist => {
+            console.log(wishlist)
+            dispatch({
+                type: GET_BUYER_WISHLIST,
+                wishlist
+            })
+        }).catch(err => console.log(err))
+}
+
+export const updateBuyerWishlist = (dispatch, wishlist) => {
+    dispatch({
+        type: UPDATE_BUYER_WISHLIST,
+        wishlist
+    })
+}
+
+export const getTenantWishlist = (dispatch, wishlist) => {
+    userService.getTenantWishlist(wishlist)
+        .then(wishlist => dispatch({
+            type: GET_TENANT_WISHLIST,
+            wishlist
+        })).catch(err => console.log(err))
+}
+
+export const updateTenantWishlist = (dispatch, wishlist) => {
+    dispatch({
+        type: UPDATE_TENANT_WISHLIST,
+        wishlist
+    })
+}
+
+export const getSellerPost = (dispatch, post) => {
+    userService.getSellerPost(post)
+        .then(post => dispatch({
+            type: GET_SELLER_POST,
+            post
+        })).catch(err => console.log(err))
+}
+
+export const updateSellerPost = (dispatch, post) => {
+    dispatch({
+        type: UPDATE_SELLER_POST,
+        post
+    })
+}
+
+export const getLenderPost = (dispatch, post) => {
+    userService.getLenderPost(post)
+        .then(post => dispatch({
+            type: GET_LENDER_POST,
+            post
+        })).catch(err => console.log(err))
+}
+
+export const updateLenderPost = (dispatch, post) => {
+    dispatch({
+        type: UPDATE_LENDER_POST,
+        post
+    })
 }
 
 const clearLogInSession = () => {
@@ -97,7 +168,11 @@ const saveLogInSession = (user) => {
 const userActions = {
     findUserById, findAllUsers,
     registerUser, updateUser, deleteUser,
-    logInUser, logOutUser
+    logInUser, logOutUser,
+    getBuyerWishlist, getTenantWishlist,
+    getSellerPost, getLenderPost,
+    updateLenderPost, updateSellerPost,
+    updateTenantWishlist, updateBuyerWishlist
 }
 
 export default userActions

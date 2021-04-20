@@ -6,7 +6,13 @@ import {
     REGISTER_USER,
     LOG_OUT_USER,
     LOG_IN_USER,
-    UPDATE_USER
+    UPDATE_USER,
+    GET_TENANT_WISHLIST,
+    GET_BUYER_WISHLIST,
+    GET_SELLER_POST,
+    GET_LENDER_POST,
+    UPDATE_SELLER_POST,
+    UPDATE_LENDER_POST, UPDATE_BUYER_WISHLIST, UPDATE_TENANT_WISHLIST
 } from '../components/actions/user-actions'
 import {
     CREATE_PROPERTY_SALE
@@ -23,7 +29,10 @@ const initialState = {
     tempProperty: {
         // insert a temporary property for a sale listing
     },
-
+    lenderPost: [],
+    sellerPost: [],
+    tenantWishlist: [],
+    buyerWishlist: []
 }
 
 const userReducer = (state = initialState, action) => {
@@ -44,6 +53,11 @@ const userReducer = (state = initialState, action) => {
                 currUser: action.user,
                 isLoggedIn: true
             }
+        case UPDATE_USER:
+            return {
+                ...state,
+                currUser: action.user
+            }
         case LOG_OUT_USER:
             return {
                 ...state,
@@ -57,10 +71,45 @@ const userReducer = (state = initialState, action) => {
                 currUser: action.user,
                 isLoggedIn: true
             }
-        case UPDATE_USER:
+        case GET_BUYER_WISHLIST:
             return {
                 ...state,
-                currUser: action.user
+                buyerWishlist: action.wishlist
+            }
+        case GET_TENANT_WISHLIST:
+            return {
+                ...state,
+                tenantWishlist: action.wishlist
+            }
+        case GET_SELLER_POST:
+            return {
+                ...state,
+                sellerPost: action.post
+            }
+        case GET_LENDER_POST:
+            return {
+                ...state,
+                lenderPost: action.post
+            }
+        case UPDATE_BUYER_WISHLIST:
+            return {
+                ...state,
+                buyerWishlist: action.wishlist
+            }
+        case UPDATE_TENANT_WISHLIST:
+            return {
+                ...state,
+                tenantWishlist: action.wishlist
+            }
+        case UPDATE_SELLER_POST:
+            return {
+                ...state,
+                sellerPost: action.post
+            }
+        case UPDATE_LENDER_POST:
+            return {
+                ...state,
+                lenderPost: action.post
             }
         case CREATE_PROPERTY_SALE:
             return {

@@ -2,6 +2,7 @@ import React, {useEffect, useState} from 'react'
 import userActions from '../actions/user-actions'
 import {connect} from 'react-redux'
 import {Helmet} from 'react-helmet'
+import {useHistory} from 'react-router-dom'
 
 const UserProfileUpdate = (
     {
@@ -10,7 +11,9 @@ const UserProfileUpdate = (
         findUserById
     }) => {
 
+    const history = useHistory()
     const [user, setUser] = useState()
+    const [password, setPassword] = useState('')
 
     useEffect(() => {
         if (localStorage.getItem('isLoggedIn') !== 'true') {
@@ -21,11 +24,17 @@ const UserProfileUpdate = (
                 findUserById(localStorage.getItem('uid'))
             }
             setUser(currUser)
+            setPassword(currUser.password)
         }
     }, [currUser])
 
     const submitUpdateRequest = () => {
-        updateUser(user._id, user)
+        if (password.length < 1) {
+            updateUser(user._id, user)
+        } else {
+            updateUser(user._id, {...user, password: password})
+        }
+        alert('Profile has been updated successfully!')
     }
 
     return (
@@ -35,12 +44,12 @@ const UserProfileUpdate = (
             </Helmet>
             {
                 user !== undefined &&
-
-
                 <div className="signup-form">
                     <form action="">
+                        <i className='fas fa-chevron-left fa-2x float-left'
+                           onClick={() => history.goBack()}></i>
                         <h2 className="text-center">
-                            Update Your Profile
+                            Update Profile
                         </h2>
                         <hr />
                         <div className="form-group row">
@@ -120,7 +129,7 @@ const UserProfileUpdate = (
                                    id="inputPassword"
                                    type="password"
                                    placeholder="Password"
-                                   onChange={(e) => setUser({...user, password: e.target.value})}
+                                   onChange={(e) => setPassword(e.target.value)}
                                    required />
                         </div>
                         <div className="form-group">
