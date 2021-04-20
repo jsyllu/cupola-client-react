@@ -29,9 +29,6 @@ const Property = (
         }
     }, [slid, rlid])
 
-    console.log(property)
-    console.log(gallery)
-
     return (
         <div className="property container">
             <h1>common part of property</h1>
@@ -39,7 +36,6 @@ const Property = (
                 "/sale/:location/p/:slid",
                 "/sale/p/:slid"]}
                    exact={true}>
-                {console.log(property)}
                 <PropertyForSale property={property} gallery={gallery} />
             </Route>
             <Route path={[
@@ -53,8 +49,7 @@ const Property = (
 }
 
 const stpm = (state) => ({
-    property: state.saleListingReducer.currProperty,
-    gallery: state.saleListingReducer.currGallery
+    property: state.saleListingReducer.currProperty
 })
 
 const dtpm = (dispatch) => ({
@@ -63,12 +58,6 @@ const dtpm = (dispatch) => ({
     },
     findRentalListingById: (rlid) => {
         propertyActions.findRentalListingById(dispatch, rlid)
-    },
-    findImagesByIdSale: (slid) => {
-        propertyActions.findImagesByIdSale(dispatch, slid)
-    },
-    findImagesByIdRental: (rlid) => {
-        propertyActions.findImagesByIdRental(dispatch, rlid)
     }
 })
 

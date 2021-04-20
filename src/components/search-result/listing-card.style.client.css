@@ -1,7 +1,5 @@
 .property-card {
     margin-bottom: 1rem;
-    /*margin-right: 8px;*/
-    /*width: calc((100% / 2) - 8px);*/
 }
 .property-card .container{
     margin: 1rem!important;
@@ -30,4 +28,8 @@
 }
 .property-card .property-address{
     font-size: 0.9rem;
+}
+.property-card .card-body i {
+    cursor: pointer;
+    color: dodgerblue;
 }

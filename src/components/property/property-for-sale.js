@@ -113,16 +113,6 @@ const PropertyForSale = (
                 <p>Type: {property.homeType}</p>
                 <p>Year Built: {property.yearBuilt}</p>
             </div>
-            <div className="property-nearby-properties">
-                <h3>Nearby Homes</h3>
-                {/*{*/}
-                {/*    property.nearbyHome((nearby) => {*/}
-                {/*        return (*/}
-                {/*            <ListingCard listing={nearby} type={PROPERTY_TYPE_SALE} />*/}
-                {/*        )*/}
-                {/*    })*/}
-                {/*}*/}
-            </div>
         </>
     )
 }

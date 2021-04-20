@@ -10,50 +10,55 @@ const ListingCard = (
     {
         listing,
         type,
+        star,
+        unlike,
         gallery,
         location,
         findSaleListingById,
-        findRentalListingById,
-        findImagesByIdSale,
-        findImagesByIdRental
+        findRentalListingById
     }) => {
 
-    const pid = listing.zpid
+    const lid = listing._id
 
     const goToProperty = () => {
         console.log("go to property")
         if (type === PROPERTY_TYPE_SALE) {
-            findSaleListingById(pid)
-            findImagesByIdSale(pid)
+            findSaleListingById(lid)
         } else if (type === PROPERTY_TYPE_RENT) {
-            findRentalListingById(pid)
-            findImagesByIdRental(pid)
+            findRentalListingById(lid)
         }
     }
 
     return (
         <div className="property-card col-6">
-            <div className="container" onClick={() => goToProperty()}>
-                <Link to={`/${type}/${location}/p/${pid}`}>
+            <div className="container"
+                 onClick={() => goToProperty()}>
+                <Link to={`/${type}${location === undefined ? '' : '/' + location}/p/${lid}`}>
                     <img src={gallery}
                          className="card-img-top property-img"
-                         alt={`Images for ${listing.address}`} />
-                    <div className="card-body">
-                        <h5 className="card-title property-price">
-                            {currencySymbol(listing.currency)}
-                            {listing.price === null ? "unknown price" : listing.price.toLocaleString('en-US')}
-                        </h5>
-                        <p className="card-text property-info">
-                            {listing.bedrooms === null ? "unknown beds" : listing.bedrooms + " bds"}&nbsp;
-                            {listing.bathrooms === null ? "unknown baths" : listing.bathrooms + " ba"}&nbsp;
-                            {listing.livingArea === null ? "unknown size" : listing.livingArea + " sqft"}&nbsp;
-                            - {listing.propertyType === null ? "unknown type" : listing.propertyType + " for " + type}
-                        </p>
-                        <p className="card-text property-address">
-                            {listing.address}
-                        </p>
-                    </div>
+                         alt={`Images for ${listing.pid.address}`} />
                 </Link>
+                <div className="card-body">
+                    {
+                        star &&
+                        <i className="fas fa-star fa-lg float-right"
+                           onClick={() => unlike()}></i>
+                    }
+                    <h5 className="card-title property-price">
+                        {currencySymbol(listing.currency)}
+                        {listing.price === null ? "unknown price" : listing.price.toLocaleString('en-US')}
+                    </h5>
+
+                    <p className="card-text property-info">
+                        {listing.pid.beds === null ? "unknown beds" : listing.pid.beds + " bds"}&nbsp;
+                        {listing.pid.baths === null ? "unknown baths" : listing.pid.baths + " ba"}&nbsp;
+                        {listing.pid.size === null ? "unknown size" : listing.pid.size + " sqft"}&nbsp;
+                        - {listing.type === null ? "unknown type" : listing.pid.type + " for " + type}
+                    </p>
+                    <p className="card-text property-address">
+                        {listing.pid.address}
+                    </p>
+                </div>
             </div>
         </div>
     )
@@ -65,16 +70,9 @@ const dtpm = (dispatch) => ({
     },
     findRentalListingById: (rlid) => {
         propertyActions.findRentalListingById(dispatch, rlid)
-    },
-    findImagesByIdSale: (slid) => {
-        propertyActions.findImagesByIdSale(dispatch, slid)
-    },
-    findImagesByIdRental: (rlid) => {
-        propertyActions.findImagesByIdRental(dispatch, rlid)
     }
 })
 
-export default
-connect
+export default connect
 (dtpm)
 (ListingCard)
