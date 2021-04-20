@@ -86,7 +86,6 @@ const UserProfile = (
                 wishList: []
             }
         }
-        // update user object
         updateUser(currUser._id, currUser)
     }
 
@@ -116,6 +115,13 @@ const UserProfile = (
             <div className="user-profile container">
                 <h1>Hello, {currUser.firstName}</h1>
                 <div className="btn-group">
+                    {
+                        currUser.isAdmin &&
+                        <Link className="btn btn-warning"
+                              to="/admin">
+                            Admin Board
+                        </Link>
+                    }
                     <Link className="btn btn-outline-success"
                           to="/profile/update">
                         Update Profile
@@ -156,7 +162,7 @@ const UserProfile = (
                     <SellerProfile uid={currUser._id}
                                    openProfile={openProfile === SELLER_PROFILE} />
                     <BuyerProfile profile={currUser.buyerProfile}
-                                    openProfile={openProfile === BUYER_PROFILE} />
+                                  openProfile={openProfile === BUYER_PROFILE} />
                     <LandlordProfile openProfile={openProfile === LANDLORD_PROFILE} />
                     <TenantProfile openProfile={openProfile === TENANT_PROFILE} />
                 </div>

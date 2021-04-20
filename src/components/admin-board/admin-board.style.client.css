@@ -1,0 +1,14 @@
+.admin-board {
+    padding: 3rem;
+}
+.admin-board h1 {
+    margin-bottom: 2rem;
+    text-align: center;
+}
+.admin-board input {
+    padding: 0;
+    width: 8rem;
+    border: none;
+    border-bottom: solid 1px black;
+    text-indent: 0;
+}
