@@ -18,6 +18,7 @@ const SearchBar = (
     const getResultForType = () => {
         if (validateSearchInput(searchInput)) {
             if (searchType === PROPERTY_TYPE_SALE) {
+                console.log(searchInput)
                 findSaleListings(searchInput)
             } else if (searchType === PROPERTY_TYPE_RENT) {
                 findRentalListings(searchInput)
@@ -60,14 +61,14 @@ const dtpm = (dispatch) => ({
     },
     findSaleListings: (location) => {
         try {
-            propertyActions.findSaleListings(dispatch, {location})
+            propertyActions.findSaleListings(dispatch, location)
         } catch (e) {
             alert(e.message)
         }
     },
     findRentalListings: (location) => {
         try {
-            propertyActions.findRentalListings(dispatch, {location})
+            propertyActions.findRentalListings(dispatch, location)
         } catch (e) {
             alert(e.message)
         }

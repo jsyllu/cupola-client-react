@@ -23,13 +23,19 @@ const RentSearchResult = (
         if (location !== searchInput) {
             updateSearchInput(location)
         }
-        // find listings for valid search input
-        if (validateSearchInput(searchInput)) {
-            findRentalListings(searchInput)
-        } else {
-            alert("Please enter a valid address for search")
-        }
     }, [location])
+
+    useEffect(() => {
+        // find listings for valid search input
+        if (rentalListings.length < 1) {
+            if (validateSearchInput(searchInput)) {
+                console.log(searchInput)
+                findRentalListings(searchInput)
+            } else {
+                alert("Please enter a valid address for search")
+            }
+        }
+    }, [searchInput])
 
     return (
         <div className="container">
@@ -69,7 +75,7 @@ const dtpm = (dispatch) => ({
     },
     findRentalListings: (location) => {
         try {
-            propertyActions.findRentalListings(dispatch, {location})
+            propertyActions.findRentalListings(dispatch, location)
         } catch (e) {
             alert(e.message)
         }
