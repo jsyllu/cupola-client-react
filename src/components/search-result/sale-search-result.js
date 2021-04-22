@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react'
+import React, {useEffect, useState} from 'react'
 import {useParams} from 'react-router-dom'
 import {Helmet} from 'react-helmet'
 import {connect} from 'react-redux'
@@ -17,9 +17,9 @@ const SaleSearchResult = (
     }) => {
 
     const {location} = useParams()
+    const [init, setInit] = useState(true)
 
     useEffect(() => {
-        // update search input with {@param location}
         if (location !== searchInput) {
             updateSearchInput(location)
         }
@@ -27,15 +27,23 @@ const SaleSearchResult = (
 
     useEffect(() => {
         // find listings for valid search input
-        if (saleListings.length < 1) {
-            if (validateSearchInput(searchInput)) {
-                console.log(searchInput)
-                findSaleListings(searchInput)
-            } else {
-                alert("Please enter a valid address for search")
-            }
+        if (init && location === searchInput) {
+            setInit(false)
+            searchSaleRequest()
+        }
+        if (!init || saleListings.length < 1) {
+            searchSaleRequest()
         }
     }, [searchInput])
+
+    const searchSaleRequest = () => {
+        if (validateSearchInput(searchInput)) {
+            console.log(searchInput)
+            findSaleListings(searchInput)
+        } else {
+            alert("Please enter a valid address for search")
+        }
+    }
 
     return (
         <div className="container">

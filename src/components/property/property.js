@@ -1,46 +1,44 @@
 import React, {useEffect} from "react"
-import {Route, useParams} from "react-router-dom"
+import {Route, useHistory, useParams} from "react-router-dom"
 import './property.style.client.css'
 import propertyActions from '../actions/property-actions'
 import {connect} from 'react-redux'
 import PropertyForSale from './property-for-sale'
 import PropertyForRent from './property-for-rent'
+import {PROPERTY_TYPE_RENT, PROPERTY_TYPE_SALE} from '../../reducers/search-bar-reducer'
 
 const Property = (
     {
-        property = {},
-        gallery = [],
         findSaleListingById,
-        findRentalListingById,
-        findImagesByIdSale,
-        findImagesByIdRental
+        findRentalListingById
     }) => {
 
-    const {slid, rlid} = useParams()
+    const history = useHistory()
+    const {type, lid} = useParams()
 
     useEffect(() => {
-        if (slid !== "undefined" && typeof slid !== "undefined" && property.zpid.toString() !== slid) {
-            console.log("start finding sale listing by id")
-            findSaleListingById(slid)
-            findImagesByIdSale(slid)
-        } else if (rlid !== "undefined" && typeof rlid !== "undefined" && property.zpid.toString() !== rlid) {
-            findRentalListingById(rlid)
-            findImagesByIdRental(rlid)
+        if (lid !== undefined) {
+            if (type === PROPERTY_TYPE_SALE) {
+                findSaleListingById(lid)
+            } else if (type === PROPERTY_TYPE_RENT) {
+                findRentalListingById(lid)
+            }
         }
-    }, [slid, rlid])
+    }, [type, lid])
 
     return (
         <div className="property container">
-            <h1>common part of property</h1>
+            <i className='fas fa-chevron-left fa-2x float-left'
+               onClick={() => history.goBack()}></i>
             <Route path={[
-                "/sale/:location/p/:slid",
-                "/sale/p/:slid"]}
+                "/sale/:location/p/:lid",
+                "/sale/p/:lid"]}
                    exact={true}>
-                <PropertyForSale property={property} gallery={gallery} />
+                <PropertyForSale />
             </Route>
             <Route path={[
-                "/rent/:location/p/:rlid",
-                "/rent/p/:rlid"]}
+                "/rent/:location/p/:lid",
+                "/rent/p/:lid"]}
                    exact={true}>
                 <PropertyForRent />
             </Route>
@@ -49,16 +47,11 @@ const Property = (
 }
 
 const stpm = (state) => ({
-    property: state.saleListingReducer.currProperty
 })
 
 const dtpm = (dispatch) => ({
-    findSaleListingById: (slid) => {
-        propertyActions.findSaleListingById(dispatch, slid)
-    },
-    findRentalListingById: (rlid) => {
-        propertyActions.findRentalListingById(dispatch, rlid)
-    }
+    findSaleListingById: (slid) => propertyActions.findSaleListingById(dispatch, slid),
+    findRentalListingById: (rlid) => propertyActions.findRentalListingById(dispatch, rlid)
 })
 
 export default connect

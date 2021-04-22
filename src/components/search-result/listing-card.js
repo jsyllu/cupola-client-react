@@ -8,11 +8,14 @@ import {PROPERTY_TYPE_RENT, PROPERTY_TYPE_SALE} from '../../reducers/search-bar-
 
 const ListingCard = (
     {
-        listing,
+        listing = {},
         type,
-        star,
+        star = false,
         unlike,
-        gallery,
+        mutable = false,
+        updateThePost,
+        deleteThePost,
+        gallery = '',
         location,
         findSaleListingById,
         findRentalListingById
@@ -31,18 +34,29 @@ const ListingCard = (
 
     return (
         <div className="property-card col-6">
-            <div className="container"
-                 onClick={() => goToProperty()}>
-                <Link to={`/${type}${location === undefined ? '' : '/' + location}/p/${lid}`}>
-                    <img src={gallery}
-                         className="card-img-top property-img"
-                         alt={`Images for ${listing.pid.address}`} />
-                </Link>
+            <div className="container">
+                <div onClick={() => goToProperty()}>
+                    <Link to={`/${type}${location === undefined ? '' : '/' + location}/p/${lid}`}>
+                        <img src={gallery}
+                             className="card-img-top property-img"
+                             alt={`Images for ${listing.pid.address}`} />
+                    </Link>
+                </div>
                 <div className="card-body">
                     {
                         star &&
                         <i className="fas fa-star fa-lg float-right"
-                           onClick={() => unlike()}></i>
+                           onClick={() => unlike(listing)}></i>
+                    }
+                    {
+                        mutable &&
+                        <>
+                            <Link to={`/profile/${type}/${listing._id}`}>
+                                <i className="fas fa-pencil fa-lg float-right"></i>
+                            </Link>
+                            <i className="fas fa-times fa-lg float-right"
+                               onClick={() => deleteThePost(listing)}></i>
+                        </>
                     }
                     <h5 className="card-title property-price">
                         {currencySymbol(listing.currency)}

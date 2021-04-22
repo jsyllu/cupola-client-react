@@ -29,14 +29,17 @@ export const findRentalListings = (dispatch, location = '') => {
             })
         }).catch(err => console.log(err))
 }
-export const findSaleListingById = (dispatch, slid = '') => {
+export const findSaleListingById = (dispatch, slid) => {
     listingService.findListingById('sale', slid)
-        .then(listing => dispatch({
-            type: FIND_SALE_LISTING_BY_ID,
-            currListing: listing
-        })).catch(err => console.log(err))
+        .then(listing => {
+            console.log(listing)
+            dispatch({
+                type: FIND_SALE_LISTING_BY_ID,
+                currListing: listing
+            })
+        }).catch(err => console.log(err))
 }
-export const findRentalListingById = (dispatch, rlid = '') => {
+export const findRentalListingById = (dispatch, rlid) => {
     listingService.findListingById('rent', rlid)
         .then(listing => dispatch({
             type: FIND_RENTAL_LISTING_BY_ID,
@@ -46,10 +49,13 @@ export const findRentalListingById = (dispatch, rlid = '') => {
 
 export const createPropertySale = (dispatch, property = {}) => {
     listingService.createProperty(property)
-        .then(property => dispatch({
-            type: CREATE_PROPERTY_SALE,
-            property
-        })).catch(err => console.log(err))
+        .then(property => {
+            console.log(property)
+            dispatch({
+                type: CREATE_PROPERTY_SALE,
+                property
+            })
+        }).catch(err => console.log(err))
 }
 
 export const createPropertyRental = (dispatch, property = {}) => {
@@ -62,10 +68,13 @@ export const createPropertyRental = (dispatch, property = {}) => {
 
 export const createSaleListing = (dispatch, listing = {}) => {
     listingService.createSaleListing(listing)
-        .then(listing => dispatch({
-            type: CREATE_SALE_LISTING,
-            listing
-        })).catch(err => console.log(err))
+        .then(listing => {
+            console.log(listing)
+            dispatch({
+                type: CREATE_SALE_LISTING,
+                listing
+            })
+        }).catch(err => console.log(err))
 }
 
 export const createRentalListing = (dispatch, listing = {}) => {

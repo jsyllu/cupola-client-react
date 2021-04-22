@@ -1,4 +1,4 @@
-import React, {useEffect} from "react"
+import React, {useEffect, useState} from "react"
 import {useParams} from "react-router-dom"
 import {Helmet} from "react-helmet"
 import {connect} from "react-redux"
@@ -17,25 +17,34 @@ const RentSearchResult = (
     }) => {
 
     const {location} = useParams()
+    const [init, setInit] = useState(true)
 
     useEffect(() => {
         // update search input with {@param location}
-        if (location !== searchInput) {
+        if (location !== undefined && location !== searchInput) {
             updateSearchInput(location)
         }
     }, [location])
 
     useEffect(() => {
         // find listings for valid search input
-        if (rentalListings.length < 1) {
-            if (validateSearchInput(searchInput)) {
-                console.log(searchInput)
-                findRentalListings(searchInput)
-            } else {
-                alert("Please enter a valid address for search")
-            }
+        if (init && location === searchInput) {
+            setInit(false)
+            searchRentalRequest()
+        }
+        if (!init || rentalListings.length < 1) {
+            searchRentalRequest()
         }
     }, [searchInput])
+
+    const searchRentalRequest = () => {
+        if (validateSearchInput(searchInput)) {
+            console.log(searchInput)
+            findRentalListings(searchInput)
+        } else {
+            alert("Please enter a valid address for search")
+        }
+    }
 
     return (
         <div className="container">

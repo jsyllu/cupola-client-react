@@ -14,6 +14,7 @@ const findAllUsers = (uid) =>
 const registerUser = (user) =>
     fetch(`${SERVER_URL}/register`, {
         method: 'POST',
+        // credentials: 'include',
         body: JSON.stringify(user),
         headers: {
             'content-type': 'application/json'
@@ -44,6 +45,7 @@ const updateUser = (uid, user) =>
 const logInUser = (credential) =>
     fetch(`${SERVER_URL}/profile/login`, {
         method: 'POST',
+        // credentials: 'include',
         body: JSON.stringify(credential),
         headers: {
             'content-type': 'application/json'
