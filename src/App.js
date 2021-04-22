@@ -14,6 +14,9 @@ import LogIn from "./components/authentication/login"
 import SaleSearchResult from "./components/search-result/sale-search-result"
 import RentSearchResult from "./components/search-result/rent-search-result"
 import UserProfileUpdate from './components/profile/user-profile-update'
+import NewPropertyForm from './components/property/new-form/new-property-form'
+import NewSaleListingForm from './components/property/new-form/new-sale-listing-form'
+import NewRentListingForm from './components/property/new-form/new-rent-listing-form'
 
 function App() {
     return (
@@ -41,6 +44,15 @@ function App() {
                 <Route path="/profile/update"
                        exact={true}
                        component={UserProfileUpdate} />
+                <Route path="/profile/property/:type/new"
+                       exact={true}
+                       component={NewPropertyForm} />
+                <Route path={["/profile/sale/new","/profile/sale/:lid"]}
+                       exact={true}
+                       component={NewSaleListingForm} />
+                <Route path={["/profile/rent/new","/profile/rent/:lid"]}
+                       exact={true}
+                       component={NewRentListingForm} />
                 <Route path="/sale/:location"
                        exact={true}
                        component={SaleSearchResult} />
@@ -48,10 +60,8 @@ function App() {
                        exact={true}
                        component={RentSearchResult} />
                 <Route path={[
-                    "/sale/:location/p/:slid",
-                    "/rent/:location/p/:rlid",
-                    "/sale/p/:slid",
-                    "/rent/p/:rlid",
+                    "/:type/:location/p/:lid",
+                    "/:type/p/:lid"
                 ]}
                        exact={true}
                        component={Property} />
