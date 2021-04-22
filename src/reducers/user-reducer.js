@@ -15,7 +15,8 @@ import {
     UPDATE_LENDER_POST, UPDATE_BUYER_WISHLIST, UPDATE_TENANT_WISHLIST
 } from '../components/actions/user-actions'
 import {
-    CREATE_PROPERTY_SALE
+    CREATE_PROPERTY_RENTAL,
+    CREATE_PROPERTY_SALE, CREATE_RENTAL_LISTING, CREATE_SALE_LISTING
 } from '../components/actions/property-actions'
 
 const initialState = {
@@ -26,9 +27,8 @@ const initialState = {
         // insert current user data
     },
     isLoggedIn: false, // not logged in by default
-    tempProperty: {
-        // insert a temporary property for a sale listing
-    },
+    propertySale: {},
+    propertyRent: {},
     lenderPost: [],
     sellerPost: [],
     tenantWishlist: [],
@@ -114,7 +114,36 @@ const userReducer = (state = initialState, action) => {
         case CREATE_PROPERTY_SALE:
             return {
                 ...state,
-                tempProperty: action.property
+                propertySale: action.property
+            }
+        case CREATE_PROPERTY_RENTAL:
+            return {
+                ...state,
+                propertyRent: action.property
+            }
+        case CREATE_SALE_LISTING:
+            return {
+                ...state,
+                sellerPost: [action.listing, ...state.sellerPost],
+                currUser: {
+                    ...state.currUser,
+                    sellerProfile: {
+                        ...state.currUser.sellerProfile,
+                        sellerPost: state.currUser.sellerProfile.sellerPost
+                    }
+                }
+            }
+        case CREATE_RENTAL_LISTING:
+            return {
+                ...state,
+                lenderPost: [action.listing, ...state.lenderPost],
+                currUser: {
+                    ...state.currUser,
+                    lenderProfile: {
+                        ...state.currUser.lenderProfile,
+                        lenderPost: state.currUser.lenderProfile.lenderPost
+                    }
+                }
             }
         default:
             return state

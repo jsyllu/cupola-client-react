@@ -95,7 +95,6 @@ export const logOutUser = (dispatch) => {
 export const getBuyerWishlist = (dispatch, wishlist) => {
     userService.getBuyerWishlist(wishlist)
         .then(wishlist => {
-            console.log(wishlist)
             dispatch({
                 type: GET_BUYER_WISHLIST,
                 wishlist
@@ -127,10 +126,13 @@ export const updateTenantWishlist = (dispatch, wishlist) => {
 
 export const getSellerPost = (dispatch, post) => {
     userService.getSellerPost(post)
-        .then(post => dispatch({
-            type: GET_SELLER_POST,
-            post
-        })).catch(err => console.log(err))
+        .then(post => {
+            console.log(post)
+            dispatch({
+                type: GET_SELLER_POST,
+                post
+            })
+        }).catch(err => console.log(err))
 }
 
 export const updateSellerPost = (dispatch, post) => {

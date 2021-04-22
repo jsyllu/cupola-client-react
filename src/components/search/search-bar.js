@@ -1,4 +1,4 @@
-import React from "react"
+import React, {useEffect, useState} from "react"
 import {connect} from "react-redux"
 import {Link} from "react-router-dom"
 import propertyActions from "../actions/property-actions"
@@ -15,17 +15,27 @@ const SearchBar = (
         findRentalListings
     }) => {
 
-    const getResultForType = () => {
-        if (validateSearchInput(searchInput)) {
-            if (searchType === PROPERTY_TYPE_SALE) {
-                console.log(searchInput)
-                findSaleListings(searchInput)
-            } else if (searchType === PROPERTY_TYPE_RENT) {
-                findRentalListings(searchInput)
-            }
-        } else {
-            alert("Please enter a valid address for search")
+    const [input, setInput] = useState('')
+
+    useEffect(() => {
+        if (input === '' && searchInput.length > 0) {
+            setInput(searchInput)
         }
+    }, [searchInput])
+
+    const getResultForType = () => {
+        updateSearchInput(input)
+        // TODO: don't call twice && search-bar cannot reload new results
+        // if (validateSearchInput(searchInput)) {
+        //     if (searchType === PROPERTY_TYPE_SALE) {
+        //         console.log(searchInput)
+        //         findSaleListings(searchInput)
+        //     } else if (searchType === PROPERTY_TYPE_RENT) {
+        //         findRentalListings(searchInput)
+        //     }
+        // } else {
+        //     alert("Please enter a valid address for search")
+        // }
     }
 
     return (
@@ -34,8 +44,8 @@ const SearchBar = (
                 <input className=""
                        type="text"
                        placeholder="Enter address"
-                       value={searchInput}
-                       onChange={(e) => updateSearchInput(e.target.value)} />
+                       value={input}
+                       onChange={(e) => setInput(e.target.value)} />
                 <Link to={`/${searchType}/${searchInput}`}
                       onClick={() => getResultForType()}>
                     <button className="btn btn-outline-primary">

@@ -1,34 +1,43 @@
-import React, {useEffect, useState} from "react"
-import userService from '../../services/user-service'
-import NewPropertyForm from '../property/new-property-form'
-import propertyActions from '../actions/property-actions'
+import React, {useEffect} from "react"
 import {connect} from 'react-redux'
-import NewSaleListingForm from '../listing/new-sale-listing-form'
+import {Link} from 'react-router-dom'
+import userActions from '../actions/user-actions'
+import ListingCard from '../search-result/listing-card'
+import {PROPERTY_TYPE_SALE} from '../../reducers/search-bar-reducer'
 
 const SellerProfile = (
     {
-        tempProperty = {},
-        uid,
+        profile,
+        posts = [],
         openProfile,
-        sellerProfile,
-        createSaleListing,
-        createPropertySale
+        getSellerPost,
+        updateSellerPost,
+        updateUser,
+        user = {}
     }) => {
 
-    const [newForm, setNewForm] = useState(false)
-    const [hasProperty, setHasProperty] = useState(false)
-    const [saleListing, setSaleListing] = useState({})
-
     useEffect(() => {
-        setHasProperty(true)
-    }, [tempProperty])
+        if (openProfile && profile !== undefined) {
+            getSellerPost(profile.postToSell)
+        }
+    }, [openProfile])
 
-    const createNewPropertySale = (property) => {
-        createPropertySale(property)
+    console.log(posts)
+
+    const deleteThePost = (post) => {
+        posts = posts.filter((p) => p._id !== post._id)
+        updateSellerPost(posts)
+        let sellerProfile = {...user.sellerProfile, postToSell: posts}
+        updateUser(user._id, {...user, sellerProfile})
     }
 
-    const createNewSaleListing = (listing) => {
-        createSaleListing(listing)
+    const updateThePost = (post) => {
+        posts = posts.map(function (p) {
+            return (p._id !== post._id) ? p : post
+        })
+        updateSellerPost(posts)
+        let sellerProfile = {...user.sellerProfile, postToSell: posts}
+        updateUser(user._id, {...user, sellerProfile})
     }
 
     return (
@@ -36,36 +45,28 @@ const SellerProfile = (
             {
                 openProfile &&
                 <div className="profile container">
-                    {
-                        newForm &&
-                        <div className="new-listing">
+                    <Link to="/profile/property/sale/new">
+                        <button className="btn btn-primary">
+                            Create a Sale Listing
+                        </button>
+                    </Link>
+                    <div className="search-result-grid">
+                        <div className="row">
                             {
-                                !hasProperty &&
-                                <NewPropertyForm uid={uid}
-                                                 createNewProperty={createNewPropertySale} />
-                            }
-                            {
-                                hasProperty &&
-                                <NewSaleListingForm pid={tempProperty._id}
-                                                    createNewSaleListing={createNewSaleListing}/>
+                                posts.map((listing) => {
+                                    return (
+                                        <ListingCard listing={listing}
+                                                     type={PROPERTY_TYPE_SALE}
+                                                     gallery="https://i.ytimg.com/vi/bIONUutiutk/maxresdefault.jpg"
+                                                     mutable={true}
+                                                     updateThePost={updateThePost}
+                                                     deleteThePost={deleteThePost}
+                                                     key={listing._id} />
+                                    )
+                                })
                             }
                         </div>
-                    }
-                    {
-                        !newForm &&
-                        <>
-                            <button onClick={() => setNewForm(true)}>
-                                Create a Sale Listing
-                            </button>
-                            <div className="post-to-sell">
-
-                            </div>
-                            <div className="sale-listing-results">
-                                <h2>Sale Listing Results</h2>
-                            </div>
-                        </>
-                    }
-
+                    </div>
                 </div>
             }
         </>
@@ -73,12 +74,12 @@ const SellerProfile = (
 }
 
 const stpm = (state) => ({
-    tempProperty: state.saleListingReducer.tempProperty
+    posts: state.userReducer.sellerPost
 })
 
 const dtpm = (dispatch) => ({
-    createPropertySale: (property) => propertyActions.createPropertySale(dispatch, property),
-    createSaleListing: (listing) => propertyActions
+    getSellerPost: (post) => userActions.getSellerPost(dispatch, post),
+    updateSellerPost: (post) => userActions.updateSellerPost(dispatch, post)
 })
 
 export default connect

@@ -37,19 +37,21 @@ const UserProfile = (
         if (localStorage.getItem('isLoggedIn') !== 'true') {
             // redirect to login page if not logged in
             history.push('/login')
-        } else {
-            if (currUser._id === undefined) {
-                findUserById(localStorage.getItem('uid'))
-                // open the first profile
-                if (currUser[SELLER_PROFILE] !== undefined) {
-                    setOpenProfile(SELLER_PROFILE)
-                } else if (currUser[BUYER_PROFILE] !== undefined) {
-                    setOpenProfile(BUYER_PROFILE)
-                } else if (currUser[LANDLORD_PROFILE] !== undefined) {
-                    setOpenProfile(LANDLORD_PROFILE)
-                } else if (currUser[TENANT_PROFILE] !== undefined) {
-                    setOpenProfile(TENANT_PROFILE)
-                }
+        }
+    }, [])
+
+    useEffect(() => {
+        if (currUser._id === undefined) {
+            findUserById(localStorage.getItem('uid'))
+            // open the first profile
+            if (currUser[SELLER_PROFILE] !== undefined) {
+                setOpenProfile(SELLER_PROFILE)
+            } else if (currUser[BUYER_PROFILE] !== undefined) {
+                setOpenProfile(BUYER_PROFILE)
+            } else if (currUser[LANDLORD_PROFILE] !== undefined) {
+                setOpenProfile(LANDLORD_PROFILE)
+            } else if (currUser[TENANT_PROFILE] !== undefined) {
+                setOpenProfile(TENANT_PROFILE)
             }
         }
     }, [currUser])
@@ -59,7 +61,6 @@ const UserProfile = (
         if (currUser[profile] === undefined) {
             createProfile(profile)
         }
-        console.log(currUser[profile])
         // open the selected profile
         openSelectedProfile(profile)
     }
@@ -159,12 +160,22 @@ const UserProfile = (
                     </button>
                 </div>
                 <div className="user-profile-detail">
-                    <SellerProfile uid={currUser._id}
-                                   openProfile={openProfile === SELLER_PROFILE} />
+                    <SellerProfile profile={currUser.sellerProfile}
+                                   openProfile={openProfile === SELLER_PROFILE}
+                                   updateUser={updateUser}
+                                   user={currUser} />
                     <BuyerProfile profile={currUser.buyerProfile}
-                                  openProfile={openProfile === BUYER_PROFILE} />
-                    <LandlordProfile openProfile={openProfile === LANDLORD_PROFILE} />
-                    <TenantProfile openProfile={openProfile === TENANT_PROFILE} />
+                                  openProfile={openProfile === BUYER_PROFILE}
+                                  updateUser={updateUser}
+                                  user={currUser} />
+                    <LandlordProfile profile={currUser.lenderProfile}
+                                     openProfile={openProfile === LANDLORD_PROFILE}
+                                     updateUser={updateUser}
+                                     user={currUser} />
+                    <TenantProfile profile={currUser.tenantProfile}
+                                   openProfile={openProfile === TENANT_PROFILE}
+                                   updateUser={updateUser}
+                                   user={currUser} />
                 </div>
             </div>
         </>

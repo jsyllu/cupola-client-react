@@ -16,7 +16,8 @@ const Register = (
     const [profile, setProfile] = useState('sellerProfile')
 
     useEffect(() => {
-        if (localStorage.getItem('isLoggedIn') === 'true') {
+        if (localStorage.getItem('isLoggedIn') === 'true' &&
+            localStorage.getItem('uid') !== undefined) {
             history.push('/profile')
         }
     }, [])

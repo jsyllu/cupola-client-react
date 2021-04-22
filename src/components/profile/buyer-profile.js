@@ -10,7 +10,9 @@ const BuyerProfile = (
         openProfile,
         wishlist = [],
         getBuyerWishlist,
-        updateBuyerWishlist
+        updateBuyerWishlist,
+        updateUser,
+        user = {}
     }) => {
 
     useEffect(() => {
@@ -20,8 +22,10 @@ const BuyerProfile = (
     }, [openProfile])
 
     const unlike = (listing) => {
-        wishlist.filter((l) => l !== listing)
+        wishlist = wishlist.filter((l) => l._id !== listing._id)
         updateBuyerWishlist(wishlist)
+        let buyerProfile = {...user.buyerProfile, wishList: wishlist}
+        updateUser(user._id, {...user, buyerProfile})
     }
 
     return (

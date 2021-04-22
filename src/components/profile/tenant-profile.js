@@ -10,7 +10,9 @@ const TenantProfile = (
         openProfile,
         wishlist = [],
         getTenantWishlist,
-        updateTenantWishlist
+        updateTenantWishlist,
+        updateUser,
+        user = {}
     }) => {
 
     useEffect(() => {
@@ -20,8 +22,10 @@ const TenantProfile = (
     }, [openProfile])
 
     const unlike = (listing) => {
-        wishlist.filter((l) => l !== listing)
+        wishlist = wishlist.filter((l) => l._id !== listing._id)
         updateTenantWishlist(wishlist)
+        let tenantProfile = {...user.tenantProfile, wishList: wishlist}
+        updateUser(user._id, {...user, tenantProfile})
     }
 
     return (
@@ -37,7 +41,7 @@ const TenantProfile = (
                                     return (
                                         <ListingCard listing={listing}
                                                      type={PROPERTY_TYPE_RENT}
-                                                     gallery="https://i.ytimg.com/vi/bIONUutiutk/maxresdefault.jpg"
+                                                     gallery="https://photos.zillowstatic.com/fp/fd2fbce65c42716ce7a3b3b7dfe8643f-cc_ft_1536.jpg"
                                                      star={true}
                                                      unlike={unlike}
                                                      key={listing._id} />
