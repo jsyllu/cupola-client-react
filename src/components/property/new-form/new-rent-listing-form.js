@@ -11,23 +11,27 @@ const NewRentListingForm = (
     }) => {
 
     const history = useHistory()
-    const [price, setPrice] = useState()
+    const [price, setPrice] = useState(2500)
 
     const submitNewRequest = (e) => {
-        if (pid === undefined) {
-            alert('Property is not defined')
-            history.push('/profile/property/rent/new')
+        if (price === 0) {
+            alert('every field must have a value')
+        } else {
+            if (pid === undefined) {
+                alert('Property is not defined')
+                history.push('/profile/property/rent/new')
+            }
+            e.preventDefault()
+            let listing = {
+                pid,
+                currency: 'USD',
+                price
+            }
+            console.log(listing)
+            createRentalListing(listing)
+            alert('A listing for rent is created successfully')
+            history.push('/profile')
         }
-        e.preventDefault()
-        let listing = {
-            pid,
-            currency: 'USD',
-            price
-        }
-        console.log(listing)
-        createRentalListing(listing)
-        alert('A listing for rent is created successfully')
-        history.push('/profile')
     }
 
     return (
@@ -53,12 +57,14 @@ const NewRentListingForm = (
                         <input className="form-control"
                                id="inputPrice"
                                type="number"
+                               value={price}
                                placeholder="2500"
                                onChange={(e) => setPrice(e.target.value)}
                                required />
                     </div>
                     <p>
-                        By clicking the submit button, I certify that (I own this property and) have the right to lend it.
+                        By clicking the submit button, I certify that (I own this property and) have the right to lend
+                        it.
                     </p>
                     <div className="form-group">
                         <button className="btn btn-primary btn-block"
@@ -70,7 +76,7 @@ const NewRentListingForm = (
                 </form>
             </div>
         </div>
-        )
+    )
 }
 
 const stpm = (state) => ({

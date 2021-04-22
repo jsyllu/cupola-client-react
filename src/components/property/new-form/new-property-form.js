@@ -15,10 +15,10 @@ const NewPropertyForm = (
 
     const {type} = useParams()
     const history = useHistory()
-    const [beds, setBeds] = useState()
-    const [baths, setBaths] = useState()
-    const [size, setSize] = useState()
-    const [address, setAddress] = useState()
+    const [beds, setBeds] = useState(2)
+    const [baths, setBaths] = useState(2)
+    const [size, setSize] = useState(1500)
+    const [address, setAddress] = useState('Default street')
 
     useEffect(() => {
         if (localStorage.getItem('isLoggedIn') !== 'true') {
@@ -28,19 +28,23 @@ const NewPropertyForm = (
     }, [])
 
     const createNewProperty = () => {
-        const property = {
-            uid,
-            beds,
-            baths,
-            size,
-            address
+        if (beds === 0 || baths === 0 || size === 0 || address.length < 1) {
+            alert('every field must have a value')
+        } else {
+            const property = {
+                uid,
+                beds,
+                baths,
+                size,
+                address
+            }
+            if (type === PROPERTY_TYPE_SALE) {
+                createPropertySale(property)
+            } else if (type === PROPERTY_TYPE_RENT) {
+                createPropertyRental(property)
+            }
+            history.push(`/profile/${type}/new`)
         }
-        if (type === PROPERTY_TYPE_SALE) {
-            createPropertySale(property)
-        } else if (type === PROPERTY_TYPE_RENT) {
-            createPropertyRental(property)
-        }
-        history.push(`/profile/${type}/new`)
     }
 
     return (
@@ -50,8 +54,8 @@ const NewPropertyForm = (
             </Helmet>
             <div className="signup-form">
                 <form action="">
-                    <i className='fas fa-chevron-left fa-2x float-left'
-                        onClick={() => history.goBack()}></i>
+                    <i className="fas fa-chevron-left fa-2x float-left"
+                       onClick={() => history.goBack()}></i>
                     <h2 className="text-center">
                         Create Property
                     </h2>
@@ -65,6 +69,7 @@ const NewPropertyForm = (
                                    className="form-control"
                                    id="inputAddress"
                                    name="address"
+                                   value={address}
                                    placeholder="150 Huntington Ave, Boston, MA 02115"
                                    onChange={(e) => setAddress(e.target.value)}
                                    required autoFocus />
@@ -78,6 +83,7 @@ const NewPropertyForm = (
                                        className="form-control"
                                        id="inputSize"
                                        name="size"
+                                       value={size}
                                        placeholder="1500"
                                        onChange={(e) => setSize(e.target.value)}
                                        required autoFocus />
@@ -92,6 +98,7 @@ const NewPropertyForm = (
                                        className="form-control"
                                        id="inputBeds"
                                        name="beds"
+                                       value={beds}
                                        placeholder="2"
                                        onChange={(e) => setBeds(e.target.value)}
                                        required autoFocus />
@@ -106,6 +113,7 @@ const NewPropertyForm = (
                                        className="form-control"
                                        id="inputBaths"
                                        name="baths"
+                                       value={baths}
                                        placeholder="2"
                                        onChange={(e) => setBaths(e.target.value)}
                                        required autoFocus />

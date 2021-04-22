@@ -11,23 +11,27 @@ const NewSaleListingForm = (
     }) => {
 
     const history = useHistory()
-    const [price, setPrice] = useState()
+    const [price, setPrice] = useState(750000)
 
     const submitNewRequest = (e) => {
-        if (pid === undefined) {
-            alert('Property is not defined')
-            history.push('/profile/property/sale/new')
+        if (price === 0) {
+            alert('every field must have a value')
+        } else {
+            if (pid === undefined) {
+                alert('Property is not defined')
+                history.push('/profile/property/sale/new')
+            }
+            e.preventDefault()
+            let listing = {
+                pid,
+                currency: 'USD',
+                price
+            }
+            console.log(listing)
+            createSaleListing(listing)
+            alert('A listing for sale is created successfully')
+            history.push('/profile')
         }
-        e.preventDefault()
-        let listing = {
-            pid,
-            currency: 'USD',
-            price
-        }
-        console.log(listing)
-        createSaleListing(listing)
-        alert('A listing for sale is created successfully')
-        history.push('/profile')
     }
 
     return (
@@ -54,6 +58,7 @@ const NewSaleListingForm = (
                                id="inputPrice"
                                type="number"
                                placeholder="750,000"
+                               value={price}
                                onChange={(e) => setPrice(e.target.value)}
                                required />
                     </div>

@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from 'react'
 import './header.style.client.css'
-import {Link, useLocation} from 'react-router-dom'
+import {Link, useHistory, useLocation} from 'react-router-dom'
 import SearchBar from '../components/search/search-bar'
 import {PROPERTY_TYPE_RENT, PROPERTY_TYPE_SALE} from '../reducers/search-bar-reducer'
 import searchBarActions from '../components/actions/search-bar-actions'
@@ -24,6 +24,7 @@ const Header = (
     const REGISTER = 'Register'
     const PROFILE = 'Profile'
 
+    const history = useHistory()
     const [isLoggedIn, setIsLoggedIn] = useState(false)
     const path = useLocation().pathname
     const [showSearchBar, setShowSearchBar] = useState(false)
@@ -52,6 +53,7 @@ const Header = (
     const submitLogOutRequest = () => {
         logOutUser()
         setIsLoggedIn(false)
+        history.push('/login')
     }
 
     return (

@@ -76,6 +76,7 @@ export const logInUser = (dispatch, credential) => {
                 saveLogInSession(user)
                 console.log('logged in')
             } else {
+                alert('Email or password doesn\'t match')
                 console.log('Invalid user object received')
             }
         }).catch(err => console.log(err))

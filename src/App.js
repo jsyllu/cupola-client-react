@@ -26,7 +26,7 @@ function App() {
             </Helmet>
             <BrowserRouter>
                 <Header />
-                <Route path="/"
+                <Route path={["/", "/search"]}
                        exact={true}
                        component={Search} />
                 <Route path="/admin"

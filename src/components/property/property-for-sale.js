@@ -6,19 +6,29 @@ import propertyActions from '../actions/property-actions'
 
 const PropertyForSale = (
     {
-        property = {}
+        property = {},
+        currUser = {}
     }) => {
 
     const [gallery, setGallery] = useState([])
-
+    const [isBuyer, setIsBuyer] = useState(false)
     const [imgNo, setImgNo] = useState(1)
 
     useEffect(() => {
         if (property._id !== undefined) {
-            console.log(property)
             setGallery(property.pid.details.gallery)
         }
     }, [property])
+
+    useEffect(() => {
+        if (currUser.buyerProfile !== undefined) {
+            setIsBuyer(true)
+        }
+    }, [currUser])
+
+    const add2Wishlist = () => {
+        // if ()
+    }
 
     return (
         <div className="container">
@@ -32,6 +42,11 @@ const PropertyForSale = (
                         </title>
                     </Helmet>
                     <div className="text-center">
+                        {
+                            isBuyer &&
+                            <i className='fas fa-star float-right'
+                               onClick={() => add2Wishlist()}></i>
+                        }
                         <h1 className="text-center">
                             {property.pid.address} For Sale
                         </h1>
@@ -43,7 +58,7 @@ const PropertyForSale = (
                         <h4>
                             {property.pid.beds} bd | {property.pid.baths} ba | {property.pid.size} sqft
                         </h4>
-                        <hr/>
+                        <hr />
                     </div>
                     <div id="carouselExampleIndicators"
                          className="property-slide carousel slide"
@@ -118,17 +133,14 @@ const PropertyForSale = (
     )
 }
 
-const stpm = (state) => (
-{
-    property: state.saleListingReducer.currProperty
-}
-)
+const stpm = (state) => ({
+    property: state.saleListingReducer.currProperty,
+    currUser: state.userReducer.currUser
+})
 
-const dtpm = (dispatch) => (
-{
+const dtpm = (dispatch) => ({
     findSaleListingById: (lid) => propertyActions.findSaleListingById(dispatch, lid)
-}
-)
+})
 
 export default connect
 (stpm, dtpm)
