@@ -46,9 +46,28 @@ const createRentalListing = (listing) =>
     }).then((res) => res.json())
         .catch(err => console.log(err))
 
+const deleteListing = (type = '', lid) =>
+    fetch(`${SERVER_URL}/${type}/p/${lid}`, {
+        method: 'DELETE',
+        headers: {
+            'content-type': 'application/json'
+        }
+    }).then((res) => res.json())
+        .catch(err => console.log(err))
+
+const updateListing = (type = '', lid, listing) =>
+    fetch(`${SERVER_URL}/${type}/p/${lid}`, {
+        method: 'PUT',
+        body: JSON.stringify(listing),
+        headers: {
+            'content-type': 'application/json'
+        }
+    }).then((res) => res.json())
+        .catch(err => console.log(err))
+
 const listingService = {
     findListingById, findSaleListings, findRentalListings, createProperty,
-    createSaleListing, createRentalListing
+    createSaleListing, createRentalListing, deleteListing, updateListing
 }
 
 export default listingService

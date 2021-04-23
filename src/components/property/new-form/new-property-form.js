@@ -36,7 +36,13 @@ const NewPropertyForm = (
                 beds,
                 baths,
                 size,
-                address
+                address,
+                type: 'CONDO',
+                details: {
+                    yearBuilt: '2021',
+                    hasParking: true,
+                    hasBasement: true
+                }
             }
             if (type === PROPERTY_TYPE_SALE) {
                 createPropertySale(property)

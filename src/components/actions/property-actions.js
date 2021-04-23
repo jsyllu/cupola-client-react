@@ -88,6 +88,18 @@ export const createRentalListing = (dispatch, listing = {}) => {
         })).catch(err => console.log(err))
 }
 
+export const deleteListing = (type = '', lid) => {
+    listingService.deleteListing(type, lid)
+        .then()
+        .catch(err => console.log(err))
+}
+
+export const updateListing = (type = '', lid, listing) => {
+    listingService.updateListing(type, lid, listing)
+        .then((listing) => console.log(listing))
+        .catch(err => console.log(err))
+}
+
 const propertyActions = {
     findSaleListings,
     findRentalListings,
@@ -96,7 +108,9 @@ const propertyActions = {
     createPropertySale,
     createPropertyRental,
     createSaleListing,
-    createRentalListing
+    createRentalListing,
+    deleteListing,
+    updateListing
 }
 
 export default propertyActions

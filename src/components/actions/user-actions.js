@@ -128,7 +128,7 @@ export const updateTenantWishlist = (dispatch, wishlist) => {
 export const getSellerPost = (dispatch, post) => {
     userService.getSellerPost(post)
         .then(post => {
-            console.log(post)
+            // console.log(post)
             dispatch({
                 type: GET_SELLER_POST,
                 post

@@ -27,7 +27,7 @@ const NewSaleListingForm = (
                 currency: 'USD',
                 price
             }
-            console.log(listing)
+            // console.log(listing)
             createSaleListing(listing)
             alert('A listing for sale is created successfully')
             history.push('/profile')

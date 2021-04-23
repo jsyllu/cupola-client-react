@@ -4,6 +4,7 @@ import userActions from '../actions/user-actions'
 import {Link} from 'react-router-dom'
 import ListingCard from '../search-result/listing-card'
 import {PROPERTY_TYPE_RENT, PROPERTY_TYPE_SALE} from '../../reducers/search-bar-reducer'
+import propertyActions from '../actions/property-actions'
 
 const LandlordProfile = (
     {
@@ -23,13 +24,16 @@ const LandlordProfile = (
     }, [openProfile])
 
     const deleteThePost = (post) => {
+        propertyActions.deleteListing('rent', post._id)
         posts = posts.filter((p) => p._id !== post._id)
         updateLenderPost(posts)
         let lenderProfile = {...user.lenderProfile, postToLend: posts}
         updateUser(user._id, {...user, lenderProfile})
+        alert('The post for rent has been deleted successfully.')
     }
 
     const updateThePost = (post) => {
+        propertyActions.updateListing('rent', post._id, post)
         posts = posts.map(function (p) {
             return (p._id !== post._id) ? p : post
         })

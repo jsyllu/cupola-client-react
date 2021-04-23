@@ -43,6 +43,14 @@ const UserProfile = (
             // redirect to login page if not logged in
             history.push('/login')
         }
+        if (localStorage.getItem('isLoggedIn') !== 'true'
+            && localStorage.getItem('uid') !== undefined) {
+            userService.findUserById(localStorage.getItem('uid'))
+                .then((user) => {
+                    setPublicView(user)
+                    setIsPublic(true)
+                }).catch(err => console.log(err))
+        }
     }, [])
 
     useEffect(() => {
@@ -56,7 +64,8 @@ const UserProfile = (
     }, [uid, currUser])
 
     useEffect(() => {
-        if (currUser._id === undefined) {
+        // console.log(currUser)
+        if (currUser !== null && currUser._id === undefined) {
             findUserById(localStorage.getItem('uid'))
             // open the first profile
             if (currUser[SELLER_PROFILE] !== undefined) {
@@ -126,7 +135,8 @@ const UserProfile = (
         <>
             <Helmet>
                 <title>
-                    {isPublic && publicView !== undefined ? publicView.firstName + publicView.lastName + '\'s Public' : ''} Profile | Cupola
+                    {isPublic && publicView !== undefined ? publicView.firstName + publicView.lastName + '\'s Public' : ''} Profile
+                    | Cupola
                 </title>
             </Helmet>
 
@@ -134,7 +144,7 @@ const UserProfile = (
                 {
                     isPublic &&
                     <>
-                        <i className='fas fa-chevron-left fa-2x'
+                        <i className="fas fa-chevron-left fa-2x"
                            onClick={() => history.goBack()}></i>
                         <h1>
                             Welcome to {publicView.firstName} {publicView.lastName}'s Profile
@@ -142,16 +152,16 @@ const UserProfile = (
                         <h3>
                             Contact: {publicView.email}
                         </h3>
-                        <br/>
+                        <br />
                         <h4>
                             User Roles:
                         </h4>
                         <ul>
                             {
                                 publicView.sellerProfile !== undefined &&
-                                    <li>
-                                        Seller
-                                    </li>
+                                <li>
+                                    Seller
+                                </li>
                             }
                             {
                                 publicView.buyerProfile !== undefined &&
@@ -175,7 +185,7 @@ const UserProfile = (
                     </>
                 }
                 {
-                    !isPublic &&
+                    !isPublic && currUser !== undefined && currUser !== null &&
                     <>
                         <h1>Hello, {currUser.firstName} {currUser.lastName}</h1>
                         <div className="btn-group">

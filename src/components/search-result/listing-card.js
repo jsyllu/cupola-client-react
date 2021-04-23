@@ -1,5 +1,5 @@
-import React from "react"
-import {Link} from "react-router-dom"
+import React, {useState} from "react"
+import {Link, useHistory} from "react-router-dom"
 import './listing-card.style.client.css'
 import {currencySymbol} from '../../util/functions'
 import propertyActions from '../actions/property-actions'
@@ -22,6 +22,8 @@ const ListingCard = (
     }) => {
 
     const lid = listing._id
+    const history = useHistory()
+    const [price, setPrice] = useState(undefined)
 
     const goToProperty = () => {
         console.log("go to property")
@@ -31,6 +33,7 @@ const ListingCard = (
             findRentalListingById(lid)
         }
     }
+// console.log(listing)
 
     return (
         <div className="property-card col-6">
@@ -50,18 +53,46 @@ const ListingCard = (
                     }
                     {
                         mutable &&
-                        <>
-                            <Link to={`/profile/${type}/${listing._id}`}>
-                                <i className="fas fa-pencil fa-lg float-right"></i>
-                            </Link>
-                            <i className="fas fa-times fa-lg float-right"
-                               onClick={() => deleteThePost(listing)}></i>
-                        </>
+                        <div className="float-right">
+                            {
+                                price === undefined &&
+                                <i className="fas fa-pencil-alt fa-lg"
+                                   onClick={() => setPrice(listing.price)}>
+                                    &nbsp;
+                                </i>
+                            }
+                            {
+                                price !== undefined &&
+                                <i className="fas fa-pencil-alt fa-lg"
+                                   onClick={() => {
+                                       updateThePost({
+                                           ...listing,
+                                           price
+                                       })
+                                       setPrice(undefined)
+                                   }}>
+                                    &nbsp;
+                                </i>
+                            }
+                            <i className="fas fa-times fa-lg"
+                               onClick={() => deleteThePost(listing)}>
+                            </i>
+                        </div>
                     }
-                    <h5 className="card-title property-price">
-                        {currencySymbol(listing.currency)}
-                        {listing.price === null ? "unknown price" : listing.price.toLocaleString('en-US')}
-                    </h5>
+                    {
+                        price === undefined &&
+                        <h5 className="card-title property-price">
+                            {currencySymbol(listing.currency)}
+                            {listing.price === null ? "unknown price" : listing.price.toLocaleString('en-US')}
+                        </h5>
+                    }
+                    {
+                        price !== undefined &&
+                        <input type="number"
+                               placeholder="1500"
+                               value={price}
+                               onChange={(e) => setPrice(e.target.value)} />
+                    }
 
                     <p className="card-text property-info">
                         {listing.pid.beds === null ? "unknown beds" : listing.pid.beds + " bds"}&nbsp;

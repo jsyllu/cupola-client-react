@@ -27,7 +27,7 @@ const NewRentListingForm = (
                 currency: 'USD',
                 price
             }
-            console.log(listing)
+            // console.log(listing)
             createRentalListing(listing)
             alert('A listing for rent is created successfully')
             history.push('/profile')

@@ -4,6 +4,7 @@ import {Link} from 'react-router-dom'
 import userActions from '../actions/user-actions'
 import ListingCard from '../search-result/listing-card'
 import {PROPERTY_TYPE_SALE} from '../../reducers/search-bar-reducer'
+import propertyActions from '../actions/property-actions'
 
 const SellerProfile = (
     {
@@ -22,16 +23,24 @@ const SellerProfile = (
         }
     }, [openProfile])
 
-    console.log(posts)
+    // console.log(posts)
+    // console.log(profile)
 
     const deleteThePost = (post) => {
+        propertyActions.deleteListing('sale', post._id)
         posts = posts.filter((p) => p._id !== post._id)
         updateSellerPost(posts)
         let sellerProfile = {...user.sellerProfile, postToSell: posts}
         updateUser(user._id, {...user, sellerProfile})
+        alert('The post for sale has been deleted successfully.')
     }
 
     const updateThePost = (post) => {
+        post = {
+            ...post,
+            pid: post.pid._id
+        }
+        propertyActions.updateListing('sale', post._id, post)
         posts = posts.map(function (p) {
             return (p._id !== post._id) ? p : post
         })
