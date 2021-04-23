@@ -38,7 +38,7 @@ function App() {
                 <Route path="/register"
                        exact={true}
                        component={Register} />
-                <Route path="/profile"
+                <Route path={["/profile", "/profile/:uid"]}
                        exact={true}
                        component={UserProfile} />
                 <Route path="/profile/update"
