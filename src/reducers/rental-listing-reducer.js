@@ -24,7 +24,7 @@ const rentalListingReducer = (state = initialState, action) => {
         case FIND_RENTAL_LISTING_BY_ID:
             return {
                 ...state,
-                currProperty: action.currProperty
+                currProperty: action.currListing
             }
         default:
             return state

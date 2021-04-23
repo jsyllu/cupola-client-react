@@ -2,17 +2,21 @@ import React, {useEffect, useState} from "react"
 import {Helmet} from "react-helmet"
 import {currencySymbol} from '../../util/functions'
 import {connect} from 'react-redux'
-import propertyActions from '../actions/property-actions'
+import {Link, useHistory} from 'react-router-dom'
+import userActions from '../actions/user-actions'
 
 const PropertyForSale = (
     {
         property = {},
-        currUser = {}
+        currUser = {},
+        updateUser
     }) => {
 
+    const history = useHistory()
     const [gallery, setGallery] = useState([])
     const [isBuyer, setIsBuyer] = useState(false)
     const [imgNo, setImgNo] = useState(1)
+    const [starred, setStarred] = useState(false)
 
     useEffect(() => {
         if (property._id !== undefined) {
@@ -21,13 +25,57 @@ const PropertyForSale = (
     }, [property])
 
     useEffect(() => {
-        if (currUser.buyerProfile !== undefined) {
+        if (currUser.buyerProfile !== undefined && property._id !== undefined) {
             setIsBuyer(true)
+            currUser.buyerProfile.wishList.map(like => {
+                if (like === property._id) {
+                    setStarred(true)
+                }
+            })
         }
-    }, [currUser])
+    }, [currUser, property])
 
-    const add2Wishlist = () => {
-        // if ()
+    // console.log(starred)
+    // console.log(currUser)
+
+    const handleStar = () => {
+        if (currUser._id === undefined) { // not logged in
+            alert('Please log in first.')
+            history.push('/login')
+        } else if (!isBuyer) { // not a buyer
+            alert('Please create a buyer profile before you save the listing for sale.')
+        } else {
+            if (starred) { // remove from wishlist
+                deleteFromWishlist()
+            } else { // add to wishlist
+                addToWishlist()
+            }
+        }
+    }
+
+    const addToWishlist = () => {
+        currUser = {
+            ...currUser,
+            buyerProfile: {
+                ...currUser.buyerProfile,
+                wishList: [...currUser.buyerProfile.wishList, property._id]
+            }
+        }
+        updateUser(currUser._id, currUser)
+        setStarred(true)
+        alert('Successfully added to your wish list in buyer profile.')
+    }
+
+    const deleteFromWishlist = () => {
+        currUser = {
+            ...currUser,
+            buyerProfile: {
+                ...currUser.buyerProfile,
+                wishList: currUser.buyerProfile.wishList.filter(lid => lid === property._id)
+            }
+        }
+        setStarred(false)
+        alert('Successfully removed from your wish list in buyer profile.')
     }
 
     return (
@@ -42,11 +90,8 @@ const PropertyForSale = (
                         </title>
                     </Helmet>
                     <div className="text-center">
-                        {
-                            isBuyer &&
-                            <i className='fas fa-star float-right'
-                               onClick={() => add2Wishlist()}></i>
-                        }
+                        <i className={`${starred ? 'fas' : 'far'} fa-star fa-2x float-right`}
+                           onClick={() => handleStar()}></i>
                         <h1 className="text-center">
                             {property.pid.address} For Sale
                         </h1>
@@ -56,7 +101,7 @@ const PropertyForSale = (
                             {property.price === undefined || property.price === null ? "unknown price" : property.price.toLocaleString('en-US')}
                         </h2>
                         <h4>
-                            {property.pid.beds} bd | {property.pid.baths} ba | {property.pid.size} sqft
+                            {property.pid.beds} beds | {property.pid.baths} baths | {property.pid.size} sqft
                         </h4>
                         <hr />
                     </div>
@@ -70,7 +115,8 @@ const PropertyForSale = (
                                         <li data-target="#carouselExampleIndicators"
                                             data-slide-to={index}
                                             className={`${imgNo === index ? 'active' : ''}`}
-                                        ></li>
+                                            key={index}>
+                                        </li>
                                     )
                                 })
                             }
@@ -110,23 +156,31 @@ const PropertyForSale = (
                 </span>
                         </a>
                     </div>
+                    <br />
                     <div className="property-facts">
-                        <h3>
+                        <h2>
                             Facts and Features
-                        </h3>
-                        <p>
+                        </h2>
+                        <hr />
+                        <h5>
                             Type: {property.pid.type === undefined ? 'CONDO' : property.pid.type}
-                        </p>
-                        <p>
+                        </h5>
+                        <h5>
                             Year Built: {property.pid.details.yearBuilt}
-                        </p>
-                        <p>
+                        </h5>
+                        <h5>
                             Has Parking: {property.pid.details.hasParking.toString()}
-                        </p>
-                        <p>
+                        </h5>
+                        <h5>
                             Has Basement: {property.pid.details.hasBasement.toString()}
-                        </p>
+                        </h5>
                     </div>
+                    <p>
+                        Owned by &nbsp;
+                        <Link to={`/profile/${property.pid.uid}`}>
+                            {property.pid.uid}
+                        </Link>
+                    </p>
                 </>
             }
         </div>
@@ -139,7 +193,8 @@ const stpm = (state) => ({
 })
 
 const dtpm = (dispatch) => ({
-    findSaleListingById: (lid) => propertyActions.findSaleListingById(dispatch, lid)
+    // findSaleListingById: (lid) => propertyActions.findSaleListingById(dispatch, lid),
+    updateUser: (uid, user) => userActions.updateUser(dispatch, uid, user)
 })
 
 export default connect

@@ -12,7 +12,7 @@ export const CREATE_RENTAL_LISTING = 'CREATE_RENTAL_LISTING'
 export const findSaleListings = (dispatch, location = '') => {
     listingService.findSaleListings(location)
         .then(sales => {
-                console.log(sales)
+                // console.log(sales)
                 dispatch({
                     type: FIND_SALE_LISTINGS,
                     saleListings: sales
@@ -22,7 +22,7 @@ export const findSaleListings = (dispatch, location = '') => {
 export const findRentalListings = (dispatch, location = '') => {
     listingService.findRentalListings(location)
         .then(rentals => {
-            console.log(rentals)
+            // console.log(rentals)
             dispatch({
                 type: FIND_RENTAL_LISTINGS,
                 rentalListings: rentals
@@ -32,7 +32,7 @@ export const findRentalListings = (dispatch, location = '') => {
 export const findSaleListingById = (dispatch, slid) => {
     listingService.findListingById('sale', slid)
         .then(listing => {
-            console.log(listing)
+            // console.log(listing)
             dispatch({
                 type: FIND_SALE_LISTING_BY_ID,
                 currListing: listing
@@ -41,16 +41,19 @@ export const findSaleListingById = (dispatch, slid) => {
 }
 export const findRentalListingById = (dispatch, rlid) => {
     listingService.findListingById('rent', rlid)
-        .then(listing => dispatch({
-            type: FIND_RENTAL_LISTING_BY_ID,
-            currListing: listing
-        })).catch(err => console.log(err))
+        .then(listing => {
+            // console.log(listing)
+            dispatch({
+                type: FIND_RENTAL_LISTING_BY_ID,
+                currListing: listing
+            })
+        }).catch(err => console.log(err))
 }
 
 export const createPropertySale = (dispatch, property = {}) => {
     listingService.createProperty(property)
         .then(property => {
-            console.log(property)
+            // console.log(property)
             dispatch({
                 type: CREATE_PROPERTY_SALE,
                 property
@@ -69,7 +72,7 @@ export const createPropertyRental = (dispatch, property = {}) => {
 export const createSaleListing = (dispatch, listing = {}) => {
     listingService.createSaleListing(listing)
         .then(listing => {
-            console.log(listing)
+            // console.log(listing)
             dispatch({
                 type: CREATE_SALE_LISTING,
                 listing

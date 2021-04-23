@@ -53,7 +53,7 @@ const Header = (
     const submitLogOutRequest = () => {
         logOutUser()
         setIsLoggedIn(false)
-        history.push('/login')
+        history.push('/')
     }
 
     return (
